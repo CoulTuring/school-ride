@@ -1,0 +1,101 @@
+<view class="container">
+
+  <view class="page-body">
+    <view class="page-section-title">个人信息</view>
+    <view class="weui-cells weui-cells_after-title">
+
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="text" value="{{formData.name}}" placeholder="必填项" disabled="true"
+            name="name"></input>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">电话</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}" placeholder="必填项" disabled="true"
+            name="mobilePhoneNumber"></input>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">性别</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="number" value="{{formData.gender}}" placeholder="必填项" disabled="true"
+            name="gender"></input>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">部门（学院）</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" disabled="true">
+            <view class="weui-input">{{array[index]}}</view>
+          </picker>
+          <!--<input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}"  placeholder="必填项"-->
+          <!--name="mobilePhoneNumber"></input>-->
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">工号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="number" value="{{formData.userId}}" placeholder="可选项" disabled="true"
+            name="userId"></input>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="page-section-title">车辆信息</view>
+    <view class="weui-cells weui-cells_after-title">
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">车型</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="text" value="{{formData.carModel}}" placeholder="可选项" disabled="true"
+            name="carModel"></input>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">颜色</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="text" value="{{formData.carColor}}" placeholder="可选项" disabled="true"
+            name="carColor"></input>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">座位数量</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="number" value="{{formData.plateNumber}}" placeholder="可选项" disabled="true"
+            name="plateNumber"></input>
+        </view>
+      </view>
+
+
+    </view>
+
+
+    <button type="primary" bindtap="editUserInfo">编辑个人信息</button>
+</view>
+
+</view>

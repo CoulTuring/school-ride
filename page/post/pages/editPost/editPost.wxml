@@ -1,0 +1,79 @@
+<view class="container">
+
+  <view class="page-body">
+    <form catchsubmit="formSubmit" catchreset="formReset">
+      <view class="page-section-title">个人信息</view>
+      <view class="weui-cells weui-cells_after-title">
+
+
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">始发站</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" type="text" value="{{formData.startAddress}}"
+              placeholder="必填项"
+              name="startAddress"></input>
+          </view>
+        </view>
+
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">终点站</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" type="text" value="{{formData.endAddress}}" placeholder="可选项"
+              name="endAddress"></input>
+          </view>
+        </view>
+
+      </view>
+
+      <view class="page-section-title">时间</view>
+      <view class="weui-cells weui-cells_after-title">
+
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">时间</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" type="date" value="{{formData.startDateTime}}"
+              placeholder="可选项"
+              name="startDateTime"></input>
+          </view>
+        </view>
+
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">剩余座位</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" type="number" value="{{formData.leftNumber}}"
+              placeholder="可选项"
+              name="leftNumber"></input>
+          </view>
+        </view>
+
+        <view class="page-section">
+          <!--<view class="page-section-title">输入区域高度自适应，不会出现滚动条</view>-->
+          <view class="textarea-wrp">
+            <textarea  auto-height value="{{formData.notes}}" placeholder='备注' name='notes'/>
+          </view>
+        </view>
+
+
+      </view>
+
+
+      <view class="page-section">
+
+      </view>
+
+      <view class="btn-area">
+        <button type="primary" formType="submit">Submit</button>
+        <button formType="reset">Reset</button>
+      </view>
+    </form>
+  </view>
+
+</view>

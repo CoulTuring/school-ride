@@ -1,0 +1,18 @@
+<view class="index">
+
+  <view class="index-bd">
+    <view class="kind-list">
+      <block wx:if="{{application.length<=0}}">
+        <view>暂无预约记录</view>
+      </block>
+      <block wx:if="{{application.length>0}}">
+        <block wx:for-items="{{application}}" wx:key="application">
+          <view class="kind-list-item" bindtap="postDetail">{{item.id}}
+          </view>
+        </block>
+      </block>
+    </view>
+  </view>
+  <button type="primary" bindtap="editPost" formType="submit">新增发布</button>
+
+</view>

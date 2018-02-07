@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="page-body">
+    <block wx:if="{{postLog && postLog.length>0}}">
+      <block wx:for-items="{{postLog}}" wx:key='postLog'>
+        <view id="{{item.id}}">
+          <view>{{item.startAddress}}=>{{item.endAddress}}</view>
+        </view>
+      </block>
+    </block>
+    <block wx:if="{{postLog && postLog.length<=0}}">
+      <view>暂无发布记录</view>
+    </block>
+  </view>
+</view>
