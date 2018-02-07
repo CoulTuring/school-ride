@@ -13,6 +13,6 @@
       </block>
     </view>
   </view>
-  <button type="primary" bindtap="editPost" formType="submit">新增发布</button>
+  <button type="primary" bindtap="applicationDetail" formType="submit">预约</button>
 
 </view>

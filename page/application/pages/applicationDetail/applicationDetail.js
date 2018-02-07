@@ -1,14 +1,13 @@
 import AV from '../../../../libs/av-weapp-min'
 
 Page({
-
   data: {},
   onLoad: function () {
     const applicationId = ''
     const application = new AV.Query('Application')
     application.get(applicationId)
                .then((applicationItem) => {
-                 const formData = {
+                 const applicationDetail = {
                    // 乘客信息
                    passengerName: applicationItem.get('passengerName'),
                    passengerPhone: applicationItem.get('passengerPhone'),
@@ -40,7 +39,7 @@ Page({
                    driverUsername: applicationItem.get('driverUsername'),
                    driverSchool: applicationItem.get('driverSchool'),
                  }
-                 this.setData({formData})
+                 this.setData({applicationDetail})
                })
     // add load this post's applicationList
   },
