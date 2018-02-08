@@ -3,6 +3,7 @@ import AV from '../../../../libs/av-weapp-min'
 Page({
   data: {},
   onLoad: function () {
+    const that = this
     const applicationId = ''
     const application = new AV.Query('Application')
     application.get(applicationId)
@@ -12,7 +13,7 @@ Page({
                    passengerName: applicationItem.get('passengerName'),
                    passengerPhone: applicationItem.get('passengerPhone'),
                    passengerGender: applicationItem.get('passengerGender'),
-                   passengerUsername: applicationItem.get('passengerUsername'),
+                   passengerUserId: applicationItem.get('passengerUserId'),
                    passengerSchool: applicationItem.get('passengerSchool'),
                    // 预约信息
                    applicationStartAddress: applicationItem.get('applicationStartAddress'),
@@ -27,19 +28,20 @@ Page({
                    postStartDateTime: applicationItem.get('postStartDateTime'),
                    postNotes: applicationItem.get('postNotes'),
                    postSeatNumber: applicationItem.get('postSeatNumber'),
+                   postLeftNumber: applicationItem.get('postLeftNumber'),
                    // 车辆信息
-                   driverLeftNumber: applicationItem.get('driverLeftNumber'),
+                   driverCarSeatNumber: applicationItem.get('driverCarSeatNumber'),
                    driverCarModel: applicationItem.get('driverCarModel'),
                    driverCarColor: applicationItem.get('driverCarColor'),
-                   driverPlateNumber: applicationItem.get('driverPlateNumber'),
+                   driverCarPlateNumber: applicationItem.get('driverCarPlateNumber'),
                    // 司机信息
                    driverName: applicationItem.get('driverName'),
-                   driverPhone: applicationItem.get('driverPhone'),
+                   driverMobilePhoneNumber: applicationItem.get('driverMobilePhoneNumber'),
                    driverGender: applicationItem.get('driverGender'),
-                   driverUsername: applicationItem.get('driverUsername'),
+                   driverUserId: applicationItem.get('driverUserId'),
                    driverSchool: applicationItem.get('driverSchool'),
                  }
-                 this.setData({applicationDetail})
+                 that.setData({applicationDetail})
                })
     // add load this post's applicationList
   },

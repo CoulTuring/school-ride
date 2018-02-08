@@ -1,13 +1,13 @@
 <view class="container">
   <view class="page-body">
-    <block wx:if="{{applicationLog && applicationLog.length>0}}">
+    <block wx:if="{{applicationLog.length>0}}">
       <block wx:for-items="{{applicationLog}}" wx:key='applicationLog'>
         <view id="{{item.id}}">
-          <view>{{item.startAddress}}=>{{item.endAddress}}</view>
+          <view>{{item.postStartAddress}}=>{{item.postEndAddress}}</view>
         </view>
       </block>
     </block>
-    <block wx:if="{{applicationLog && applicationLog.length<=0}}">
+    <block wx:if="{{applicationLog.length<=0}}">
       <view>暂无预约记录</view>
     </block>
   </view>

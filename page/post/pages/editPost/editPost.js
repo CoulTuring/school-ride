@@ -12,7 +12,7 @@ Page({
     //          const formData = {
     //            startAddress: post.get('startAddress'),
     //            endAddress: post.get('endAddress'),
-    //            leftNumber: post.get('leftNumber'),
+    //            SeatNumber: post.get('SeatNumber'),
     //            startDateTime: post.get('startDateTime'),
     //            notes: post.get('notes')
     //          }
@@ -26,7 +26,7 @@ Page({
     const formData = {
       startAddress: null,
       endAddress: null,
-      leftNumber: null,
+      SeatNumber: null,
       startDateTime: null,
       notes: null
     }
@@ -44,9 +44,25 @@ Page({
     // 新建对象
     let post = new Post()
     //
+    const driverDetail = {
+      // 车辆信息
+      driverCarModel: user.get('carModel'),
+      driverCarColor: user.get('carColor'),
+      driverCarSeatNumber: user.get('carSeatNumber'),
+      driverCarPlateNumber: user.get('carPlateNumber'),
+      // 司机信息
+      driverName: user.get('name'),
+      driverMobilePhoneNumber: user.get('mobilePhoneNumber'),
+      driverGender: user.get('gender'),
+      driverUserId: user.get('userId'),
+      driverSchool: user.get('school'),
+    }
+    console.log(driverDetail)
+    console.log(form)
     post.set(form)
+    post.set(driverDetail)
     post.set('driver', user)
-    post.set('finished', false)
+
     post.save().then(function (post) {
       console.log('objectId is ' + post.id)
       wx.showToast({

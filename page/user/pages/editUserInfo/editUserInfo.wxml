@@ -78,8 +78,8 @@
             <view class="weui-label">座位数量</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.plateNumber}}" placeholder="可选项"
-              name="plateNumber"></input>
+            <input class="weui-input" type="number" value="{{formData.carCarPlateNumber}}" placeholder="可选项"
+              name="carCarPlateNumber"></input>
           </view>
         </view>
 

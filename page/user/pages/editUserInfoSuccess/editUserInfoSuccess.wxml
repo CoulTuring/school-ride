@@ -66,7 +66,7 @@
       <view class="weui-cells__title">座位数量</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
-          <input class="weui-input" type="number" name='plateNumber' placeholder="可选项" />
+          <input class="weui-input" type="number" name='carCarPlateNumber' placeholder="可选项" />
         </view>
       </view>
 

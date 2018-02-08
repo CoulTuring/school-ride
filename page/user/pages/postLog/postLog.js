@@ -2,7 +2,8 @@ import AV from '../../../../libs/av-weapp-min'
 
 Page({
   data: {},
-  onLoad: () => {
+  onLoad: function () {
+    const that = this
     wx.showToast({
       title: 'loading...',
       icon: 'loading'
@@ -17,6 +18,7 @@ Page({
     const query = AV.Query.and(finishedPost, creator)
 
     query.find().then(function (results) {
+      console.log(results)
       const postLog = results.map((postItem) => {
         return {
           id: postItem.id,
@@ -25,9 +27,10 @@ Page({
           postStartDateTime: postItem.get('postStartDateTime'),
           postNotes: postItem.get('postNotes'),
           postSeatNumber: postItem.get('postSeatNumber'),
+          postLeftNumber: postItem.get('postLeftNumber')
         }
       })
-      this.setData({
+      that.setData({
         postLog: postLog
       })
       wx.hideToast()

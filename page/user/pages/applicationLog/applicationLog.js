@@ -4,18 +4,19 @@ Page({
 
   data: {
   },
-  onLoad: () => {
+  onLoad: function () {
+
+    const that = this
     wx.showToast({
       title: 'loading...',
       icon: 'loading'
     })
     const user = AV.User.current()
     const finishedApplication = new AV.Query('Application')
-    finishedApplication.equalTo('finished', true)
+    finishedApplication.equalTo('applicationFinished', true)
 
     const creator = new AV.Query('Application')
     creator.equalTo('creator', user)
-
     const query = AV.Query.and(finishedApplication, creator)
 
     query.find().then(function (results) {
@@ -27,11 +28,10 @@ Page({
           postStartDateTime: applicationItem.get('postStartDateTime'),
           postNotes: applicationItem.get('postNotes'),
           postSeatNumber: applicationItem.get('postSeatNumber'),
+          postLeftNumber: applicationItem.get('postLeftNumber')
         }
       })
-      this.setData({
-        applicationLog: applicationLog
-      })
+      that.setData({applicationLog})
       wx.hideToast()
     }, (error) => {
       console.log(error)

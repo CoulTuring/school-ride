@@ -31,16 +31,16 @@ Page({
             postNotes: postItem.get('postNotes'),
             postSeatNumber: postItem.get('postSeatNumber'),
             // 车辆信息
-            driverLeftNumber: postItem.get('driverLeftNumber'),
+            driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
             driverCarModel: postItem.get('driverCarModel'),
             driverCarColor: postItem.get('driverCarColor'),
-            driverPlateNumber: postItem.get('driverPlateNumber'),
+            driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
             // 司机信息
             driverName: postItem.get('driverName'),
-            driverPhone: postItem.get('driverPhone'),
+            driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
             driverGender: postItem.get('driverGender'),
-            driverUsername: postItem.get('driverUsername'),
-            driverSchool: postItem.get('driverSchool'),
+            driverUserId: postItem.get('driverUserId'),
+            driverSchool: postItem.get('driverSchool')
           }
           this.setData({postData: postData, post: post})
         }, function (error) {
@@ -55,18 +55,18 @@ Page({
     const Application = AV.Object.extend('Application')
 
     const passengerData = {
-      passengerName: user.get('passengerName'),
-      passengerPhone: user.get('passengerPhone'),
-      passengerGender: user.get('passengerGender'),
-      passengerUsername: user.get('passengerUsername'),
-      passengerSchool: user.get('passengerSchool'),
+      passengerName: user.get('name'),
+      passengerPhone: user.get('phone'),
+      passengerGender: user.get('gender'),
+      passengerUserId: user.get('userId'),
+      passengerSchool: user.get('school'),
     }
 
     let application = new Application()
     application.set(form)  // app信息
     application.set('passenger', passengerData)  // passenger
-    application.set('post', this.post)
-    application.set(this.postData)
+    application.set('post', this.data.post)
+    application.set(this.data.postData)
     application.save()
                .then(function (applicationItem) {
                  console.log('objectId is ' + applicationItem.id)
@@ -93,15 +93,15 @@ Page({
     //         postNotes: postItem.get('postNotes'),
     //         postSeatNumber: postItem.get('postSeatNumber'),
     //         // 车辆信息
-    //         driverLeftNumber: postItem.get('driverLeftNumber'),
+    //         driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
     //         driverCarModel: postItem.get('driverCarModel'),
     //         driverCarColor: postItem.get('driverCarColor'),
-    //         driverPlateNumber: postItem.get('driverPlateNumber'),
+    //         driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
     //         // 司机信息
     //         driverName: postItem.get('driverName'),
-    //         driverPhone: postItem.get('driverPhone'),
+    //         driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
     //         driverGender: postItem.get('driverGender'),
-    //         driverUsername: postItem.get('driverUsername'),
+    //         driverUserId: postItem.get('driverUserId'),
     //         driverSchool: postItem.get('driverSchool'),
     //       }
     //
@@ -109,7 +109,7 @@ Page({
     //         passengerName: user.get('passengerName'),
     //         passengerPhone: user.get('passengerPhone'),
     //         passengerGender: user.get('passengerGender'),
-    //         passengerUsername: user.get('passengerUsername'),
+    //         passengerUserId: user.get('passengerUserId'),
     //         passengerSchool: user.get('passengerSchool'),
     //       }
     //

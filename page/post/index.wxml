@@ -5,9 +5,9 @@
       <block wx:if="{{applicationLog.length<=0}}">
         <view>暂无预约记录</view>
       </block>
-      <block wx:for="{{applicationLog}}" wx:for-item="item" wx:key="applicationLog">
-        <view>
-          <text>{{item.id}}</text>
+      <block wx:for="{{postList}}" wx:for-item="item" wx:key="applicationLog">
+        <view id="{{item.id}}"  bindtap="postDetail">
+          <text>{{item.postStartAddress}}=>{{item.postEndAddress}}</text>
         </view>
       </block>
 

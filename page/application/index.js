@@ -1,10 +1,9 @@
 import AV from '../../libs/av-weapp-min'
 
 Page({
-  data: {
-    application: []
-  },
-  onLoad: () => {
+  data: {},
+  onLoad: function () {
+    const that = this
     wx.showToast({
       title: 'loading...',
       icon: 'loading'
@@ -20,23 +19,22 @@ Page({
           postEndAddress: postItem.get('postEndAddress'),
           postStartDateTime: postItem.get('postStartDateTime'),
           postNotes: postItem.get('postNotes'),
+          postLeftNumber: postItem.get('postLeftNumber'),
           postSeatNumber: postItem.get('postSeatNumber'),
           // 车辆信息
-          driverLeftNumber: postItem.get('driverLeftNumber'),
+          driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
           driverCarModel: postItem.get('driverCarModel'),
           driverCarColor: postItem.get('driverCarColor'),
-          driverPlateNumber: postItem.get('driverPlateNumber'),
+          driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
           // 司机信息
           driverName: postItem.get('driverName'),
-          driverPhone: postItem.get('driverPhone'),
+          driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
           driverGender: postItem.get('driverGender'),
-          driverUsername: postItem.get('driverUsername'),
+          driverUserId: postItem.get('driverUserId'),
           driverSchool: postItem.get('driverSchool'),
         }
       })
-      this.setData({
-        postList: postList
-      })
+      that.setData({postList})
       wx.hideToast()
     }, (error) => {
       console.log(error)
@@ -61,26 +59,23 @@ Page({
           postNotes: applicationItem.get('postNotes'),
           postSeatNumber: applicationItem.get('postSeatNumber'),
           // 车辆信息
-          driverLeftNumber: applicationItem.get('driverLeftNumber'),
+          driverCarSeatNumber: applicationItem.get('driverCarSeatNumber'),
           driverCarModel: applicationItem.get('driverCarModel'),
           driverCarColor: applicationItem.get('driverCarColor'),
-          driverPlateNumber: applicationItem.get('driverPlateNumber'),
+          driverCarPlateNumber: applicationItem.get('driverCarPlateNumber'),
           // 司机信息
           driverName: applicationItem.get('driverName'),
-          driverPhone: applicationItem.get('driverPhone'),
+          driverMobilePhoneNumber: applicationItem.get('driverMobilePhoneNumber'),
           driverGender: applicationItem.get('driverGender'),
-          driverUsername: applicationItem.get('driverUsername'),
+          driverUserId: applicationItem.get('driverUserId'),
           driverSchool: applicationItem.get('driverSchool'),
         }
       })
-      this.setData({
-        applicationList: applicationList
-      })
+      that.setData({applicationList})
       wx.hideToast()
     }, (error) => {
       console.log(error)
     })
-
   },
   applicationDetail: () => {
     wx.navigateTo({url: './pages/applicationDetail/applicationDetail'})

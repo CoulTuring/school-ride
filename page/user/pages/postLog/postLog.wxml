@@ -3,7 +3,7 @@
     <block wx:if="{{postLog && postLog.length>0}}">
       <block wx:for-items="{{postLog}}" wx:key='postLog'>
         <view id="{{item.id}}">
-          <view>{{item.startAddress}}=>{{item.endAddress}}</view>
+          <view>{{item.postStartAddress}}=>{{item.postEndAddress}}</view>
         </view>
       </block>
     </block>

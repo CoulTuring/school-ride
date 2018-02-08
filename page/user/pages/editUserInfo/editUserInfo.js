@@ -12,7 +12,8 @@ Page({
       school: user.get('school') || null,
       carColor: user.get('carColor') || null,
       carModel: user.get('carModel') || null,
-      plateNumber: user.get('plateNumber') || null
+      carSeatNumber: user.get('carSeatNumber') || null,
+      carPlateNumber: user.get('carPlateNumber') || null
     }
 
     this.setData({

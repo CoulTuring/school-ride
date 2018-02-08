@@ -2,19 +2,18 @@ import AV from '../../../../libs/av-weapp-min'
 
 Page({
 
-  data: {
-    formData: {}
-  },
-  onLoad: () => {
-    const postId = ''
+  data: {},
+  onLoad: function (options) {
+    const that=this
+    this.setData({postId: options.postId})
     wx.showToast({
       title: 'loading...',
       icon: 'loading'
     })
     const post = new AV.Query('Post')
-    post.get(postId)
+    const application = new AV.Query('Application')
+    post.get(options.postId)
         .then(function (postItem) {
-
           let postData = {
             // 发布信息
             postStartAddress: postItem.get('postStartAddress'),
@@ -22,30 +21,34 @@ Page({
             postStartDateTime: postItem.get('postStartDateTime'),
             postNotes: postItem.get('postNotes'),
             postSeatNumber: postItem.get('postSeatNumber'),
+            postLeftNumber: postItem.get('postLeftNumber'),
             // 车辆信息
-            driverLeftNumber: postItem.get('driverLeftNumber'),
+            driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
             driverCarModel: postItem.get('driverCarModel'),
             driverCarColor: postItem.get('driverCarColor'),
-            driverPlateNumber: postItem.get('driverPlateNumber'),
+            driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
             // 司机信息
             driverName: postItem.get('driverName'),
-            driverPhone: postItem.get('driverPhone'),
+            driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
             driverGender: postItem.get('driverGender'),
-            driverUsername: postItem.get('driverUsername'),
+            driverUserId: postItem.get('driverUserId'),
             driverSchool: postItem.get('driverSchool'),
           }
-          this.setData({postData})
-          const application = new AV.Query('Application')
+          console.log(postData)
+          that.setData({postData})
+
           application.equalTo('post', postItem)
           application.find()
                      .then((results) => {
+            console.log(this.data.postData)
+            console.log(results)
                        const applications = results.map((applicationItem) => {
                          return {
-                           id:applicationItem.id,
+                           id: applicationItem.id,
                            passengerName: applicationItem.get('passengerName'),
                            passengerPhone: applicationItem.get('passengerPhone'),
                            passengerGender: applicationItem.get('passengerGender'),
-                           passengerUsername: applicationItem.get('passengerUsername'),
+                           passengerUserId: applicationItem.get('passengerUserId'),
                            passengerSchool: applicationItem.get('passengerSchool'),
 
                            applicationStartAddress: applicationItem.get('applicationStartAddress'),
@@ -56,7 +59,7 @@ Page({
                            applicationFinished: applicationItem.get('applicationFinished'),
                          }
                        })
-                       this.setData({applications})
+                       that.setData({applications})
                        wx.hideToast()
                      })
                      .catch((error) => {})
