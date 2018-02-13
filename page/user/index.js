@@ -18,24 +18,6 @@ Page({
       }
     ]
   },
-  onLoad: function () {
-    AV.User.loginWithWeapp()
-      .then(function (user) {
-        // 调用小程序 API，得到用户信息
-        wx.getUserInfo({
-          success: function ({userInfo}) {
-            // 更新当前用户的信息
-            console.log(userInfo)
-            user.set(userInfo).save().then(function (user) {
-              // 成功，此时可在控制台中看到更新后的用户信息
-              // this.globalData.user = user.toJSON()
-            }).catch(console.error)
-          }
-        })
-      })
-      .catch(console.error)
-  },
-
   kindToggle: function (e) {
     var id = e.currentTarget.id, list = this.data.list
     for (var i = 0, len = list.length; i < len; ++i) {

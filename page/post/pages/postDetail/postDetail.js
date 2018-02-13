@@ -4,7 +4,7 @@ Page({
 
   data: {},
   onLoad: function (options) {
-    const that=this
+    const that = this
     this.setData({postId: options.postId})
     wx.showToast({
       title: 'loading...',
@@ -34,19 +34,17 @@ Page({
             driverUserId: postItem.get('driverUserId'),
             driverSchool: postItem.get('driverSchool'),
           }
-          console.log(postData)
           that.setData({postData})
 
           application.equalTo('post', postItem)
           application.find()
                      .then((results) => {
-            console.log(this.data.postData)
-            console.log(results)
-                       const applications = results.map((applicationItem) => {
+                       console.log(results)
+                       const applicationList = results.map((applicationItem) => {
                          return {
                            id: applicationItem.id,
                            passengerName: applicationItem.get('passengerName'),
-                           passengerPhone: applicationItem.get('passengerPhone'),
+                           passengerMobilePhoneNumber: applicationItem.get('passengerMobilePhoneNumber'),
                            passengerGender: applicationItem.get('passengerGender'),
                            passengerUserId: applicationItem.get('passengerUserId'),
                            passengerSchool: applicationItem.get('passengerSchool'),
@@ -59,30 +57,42 @@ Page({
                            applicationFinished: applicationItem.get('applicationFinished'),
                          }
                        })
-                       that.setData({applications})
+                       console.log(applicationList)
+                       that.setData({applicationList})
                        wx.hideToast()
                      })
                      .catch((error) => {})
         })
         .catch((error) => {})
   },
-  onCancel: () => {
+  onCancel: function () {
+    const postId = this.data.postId
     wx.showModal({
       content: '是否要取消此次行程',
       confirmText: '确定',
-      cancelText: '取消'
-    })
-    const postId = ''
-    const post = new AV.Query('Post')
-    post.get(postId)
-        .then(function (post) {
-          post.set('canceled', true)
-          post.set('finished', true)
-          post.save()
-              .then((newPost) => {
-                wx.navigateBack({number: 1})
+      cancelText: '取消',
+      success: function (res) {
+        if (res.confirm) {
+          const post = new AV.Query('Post')
+          post.get(postId)
+              .then(function (post) {
+                post.set('postCanceled', true)
+                post.set('postFinished', true)
+                post.save()
+                    .then((newPost) => {
+                      wx.navigateBack({number: 1})
+                    })
               })
-        })
-        .catch((error) => {})
+              .catch((error) => {console.log(error)})
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+
+  },
+  onEdit: function () {
+    const postId = this.data.postId
+    wx.navigateTo({url: `../editPost/editPost?postId=${postId}`})
   }
 })

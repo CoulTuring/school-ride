@@ -2,16 +2,17 @@ import AV from '../../../../libs/av-weapp-min'
 
 Page({
   data: {},
-  onLoad: function () {
+  onLoad: function (options) {
     const that = this
-    const applicationId = ''
+    const applicationId = options.applicationId
+    this.setData({applicationId})
     const application = new AV.Query('Application')
     application.get(applicationId)
                .then((applicationItem) => {
-                 const applicationDetail = {
+                 const applicationData = {
                    // 乘客信息
                    passengerName: applicationItem.get('passengerName'),
-                   passengerPhone: applicationItem.get('passengerPhone'),
+                   passengerMobilePhoneNumber: applicationItem.get('passengerMobilePhoneNumber'),
                    passengerGender: applicationItem.get('passengerGender'),
                    passengerUserId: applicationItem.get('passengerUserId'),
                    passengerSchool: applicationItem.get('passengerSchool'),
@@ -41,27 +42,38 @@ Page({
                    driverUserId: applicationItem.get('driverUserId'),
                    driverSchool: applicationItem.get('driverSchool'),
                  }
-                 that.setData({applicationDetail})
+                 that.setData({applicationData})
                })
     // add load this post's applicationList
   },
-  onCancel: () => {
+  onCancel: function () {
+    const applicationId = this.data.applicationId
     wx.showModal({
       content: '是否要取消此次行程',
       confirmText: '确定',
-      cancelText: '取消'
+      cancelText: '取消',
+      success: function (res) {
+        if (res.confirm) {
+          const application = new AV.Query('Application')
+          application.get(applicationId)
+                     .then(function (applicationItem) {
+                       applicationItem.set('applicationCanceled', true)
+                       applicationItem.set('applicationFinished', true)
+                       applicationItem.save()
+                                      .then((newApplication) => {
+                                        console.log(newApplication)
+                                        wx.navigateBack({number: 1})
+                                      })
+                     })
+                     .catch((error) => {console.log(error)})
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
-    const postId = ''
-    const application = new AV.Query('Application')
-    application.get(postId)
-               .then(function (ApplicationItem) {
-                 ApplicationItem.set('canceled', true)
-                 ApplicationItem.save()
-                                .then((newApplication) => {
-                                  wx.navigateBack({number: 1})
-                                })
-               })
-               .catch((error) => {})
-
-  }
+  },
+  onEdit: function () {
+    const applicationId = this.data.applicationId
+    wx.navigateTo({url: `../editApplication/editApplication?applicationId=${applicationId}`})
+  },
 })

@@ -1,19 +1,42 @@
-<view class="index">
+<view class="page">
+  <view class="page-bd">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__bd">
 
-  <view class="index-bd">
-    <view class="kind-list">
-      <block wx:if="{{applicationLog.length<=0}}">
-        <view>暂无预约记录</view>
-      </block>
-      <block wx:for="{{postList}}" wx:for-item="item" wx:key="applicationLog">
-        <view id="{{item.id}}"  bindtap="postDetail">
-          <text>{{item.postStartAddress}}=>{{item.postEndAddress}}</text>
-        </view>
-      </block>
+        <block wx:if="{{!postList}}">
+          <view class="weui-loadmore">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
+          </view>
+        </block>
+        <block wx:if="{{postList.length<=0}}">
+          <view>暂无发布中行程</view>
+        </block>
 
+        <block wx:for="{{postList}}" wx:for-item="item" wx:key="postList">
 
+          <view bindtap='postDetail' id='{{item.id}}'
+            class="weui-media-box weui-media-box_appmsg"
+            hover-class="weui-cell_active">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+              <image class="weui-media-box__thumb" src="{{icon60}}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__title">
+                {{item.postStartAddress}}=>{{item.postEndAddress}}
+              </view>
+              <view class="weui-media-box__desc">发车时间：{{item.postStartDateTime}}</view>
+              <view class="weui-media-box__desc">
+                剩余座位：{{item.postLeftNumber}}/{{item.postSeatNumber}}
+              </view>
+              <view class="weui-media-box__desc">备注：{{item.postNotes}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
-  <button type="primary" bindtap="editPost" formType="submit">新增发布</button>
-
+  <view class="page__bd page__bd_spacing">
+    <button class="weui-btn" type="primary" bindtap="editPost" formType="submit">新增发布</button>
+  </view>
 </view>

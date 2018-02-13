@@ -10,12 +10,12 @@ Page({
     })
     const user = AV.User.current()
     const finishedPost = new AV.Query('Post')
-    finishedPost.equalTo('finished', true)
+    finishedPost.equalTo('postFinished', true)
 
-    const creator = new AV.Query('Post')
-    creator.equalTo('creator', user)
+    const driver = new AV.Query('Post')
+    driver.equalTo('driver', user)
 
-    const query = AV.Query.and(finishedPost, creator)
+    const query = AV.Query.and(finishedPost, driver)
 
     query.find().then(function (results) {
       console.log(results)

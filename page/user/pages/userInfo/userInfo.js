@@ -6,7 +6,7 @@ Page({
 
     const formData = {
       name: user.get('name'),
-      gender: user.get('gender'),
+      userGender: user.get('userGender'),
       mobilePhoneNumber: user.get('mobilePhoneNumber'),
       userId: user.get('userId') || null,
       school: user.get('school') || null,
@@ -47,7 +47,7 @@ Page({
   },
 
   editUserInfo: function () {
-    wx.navigateTo({url: '../editApplication/editApplication'})
+    wx.navigateTo({url: '../editUserInfo/editUserInfo'})
   },
 
   formSubmit: function (e) {

@@ -1,14 +1,38 @@
-<view class="container">
-  <view class="page-body">
-    <block wx:if="{{applicationLog.length>0}}">
-      <block wx:for-items="{{applicationLog}}" wx:key='applicationLog'>
-        <view id="{{item.id}}">
-          <view>{{item.postStartAddress}}=>{{item.postEndAddress}}</view>
-        </view>
-      </block>
-    </block>
-    <block wx:if="{{applicationLog.length<=0}}">
-      <view>暂无预约记录</view>
-    </block>
+<view class="page">
+  <view class="page-bd">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__bd">
+
+        <block wx:if="{{!applicationLog}}">
+          <view class="weui-loadmore">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
+          </view>
+        </block>
+        <block wx:if="{{applicationLog.length<=0}}">
+          <view>暂无预约记录</view>
+        </block>
+
+        <block wx:for="{{applicationLog}}" wx:for-item="item" wx:key="applicationLog">
+          <view id='{{item.id}}'
+            class="weui-media-box weui-media-box_appmsg"
+            hover-class="weui-cell_active">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+              <image class="weui-media-box__thumb" src="{{icon60}}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__title">
+                {{item.postStartAddress}}=>{{item.postEndAddress}}
+              </view>
+              <view class="weui-media-box__desc">发车时间：{{item.postStartDateTime}}</view>
+              <view class="weui-media-box__desc">
+                剩余座位：{{item.postLeftNumber}}/{{item.postSeatNumber}}
+              </view>
+              <view class="weui-media-box__desc">备注：{{item.postNotes}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
   </view>
 </view>

@@ -48,7 +48,7 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="date" value="{{formData.postStartDateTime}}"
-              placeholder="可选项"
+              placeholder=""
               name="postStartDateTime"></input>
           </view>
         </view>
@@ -59,7 +59,7 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="number" value="{{formData.postSeatNumber}}"
-              placeholder="可选项"
+              placeholder=""
               name="postSeatNumber"></input>
           </view>
         </view>

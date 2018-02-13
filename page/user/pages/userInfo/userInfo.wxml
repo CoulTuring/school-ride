@@ -10,17 +10,29 @@
           <view class="weui-label">姓名</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.name}}" placeholder="必填项" disabled="true"
+          <input class="weui-input" type="text" value="{{formData.name}}" placeholder="必填项"
+            disabled="true"
             name="name"></input>
         </view>
       </view>
 
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
+          <view class="weui-label">性别</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="text" value="{{formData.userGender}}" placeholder="必填项"
+            disabled="true"
+            name="userGender"></input>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
           <view class="weui-label">电话</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}" placeholder="必填项" disabled="true"
+          <input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}"
+            placeholder="必填项" disabled="true"
             name="mobilePhoneNumber"></input>
         </view>
       </view>
@@ -29,8 +41,9 @@
           <view class="weui-label">性别</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.gender}}" placeholder="必填项" disabled="true"
-            name="gender"></input>
+          <input class="weui-input" type="number" value="{{formData.userGender}}" placeholder="必填项"
+            disabled="true"
+            name="userGender"></input>
         </view>
       </view>
 
@@ -52,7 +65,8 @@
           <view class="weui-label">工号</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.userId}}" placeholder="可选项" disabled="true"
+          <input class="weui-input" type="number" value="{{formData.userId}}" placeholder="可选项"
+            disabled="true"
             name="userId"></input>
         </view>
       </view>
@@ -67,17 +81,28 @@
           <view class="weui-label">车型</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.carModel}}" placeholder="可选项" disabled="true"
+          <input class="weui-input" type="text" value="{{formData.carModel}}" placeholder="可选项"
+            disabled="true"
             name="carModel"></input>
         </view>
       </view>
-
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">车牌号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="text" value="{{formData.carPlateNumber}}"
+            placeholder="可选项" disabled="true"
+            name="carPlateNumber"></input>
+        </view>
+      </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">颜色</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.carColor}}" placeholder="可选项" disabled="true"
+          <input class="weui-input" type="text" value="{{formData.carColor}}" placeholder="可选项"
+            disabled="true"
             name="carColor"></input>
         </view>
       </view>
@@ -86,8 +111,9 @@
           <view class="weui-label">座位数量</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.carCarPlateNumber}}" placeholder="可选项" disabled="true"
-            name="carCarPlateNumber"></input>
+          <input class="weui-input" type="number" value="{{formData.carSeatNumber}}"
+            placeholder="可选项" disabled="true"
+            name="carSeatNumber"></input>
         </view>
       </view>
 
@@ -96,6 +122,6 @@
 
 
     <button type="primary" bindtap="editUserInfo">编辑个人信息</button>
-</view>
+  </view>
 
 </view>

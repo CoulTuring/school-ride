@@ -9,7 +9,6 @@
     "page/user/index",
     "page/user/pages/userInfo/userInfo",
     "page/user/pages/editUserInfo/editUserInfo",
-    "page/user/pages/editUserInfoSuccess/editUserInfoSuccess",
     "page/user/pages/applicationLog/applicationLog",
     "page/user/pages/postLog/postLog"
   ],

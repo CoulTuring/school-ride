@@ -2,81 +2,148 @@
 import AV from '../../../../libs/av-weapp-min'
 
 Page({
-  onLoad: function () {
-    // const create = true
-    // this.setData({create})
-    // if (!create) {
-    //   const applicationId = '57328ca079bc44005c2472d0'
-    //   const query = new AV.Query('Application')
-    //   query.get(applicationId)
-    //        .then(function (applicationItem) {
-    //          const applicationData = {
-    //            applicationStartAddress: applicationItem.get('applicationStartAddress'),
-    //            applicationNotes: applicationItem.get('applicationNotes'),
-    //          }
-    //          this.setData({applicationData})
-    //        }, function (error) {
-    //          // 异常处理
-    //        })
-    // }
+  onLoad: function (options) {
 
-    const postId = '57328ca079bc44005c2472d0'
+    const postId = options.postId || null
+    const applicationId = options.applicationId || null
+    this.setData({applicationId: applicationId, postId: postId})
+    const that = this
     const post = new AV.Query('Post')
-    post.get(postId)
-        .then(function (postItem) {
-          const postData = {
-            postStartAddress: postItem.get('postStartAddress'),
-            postEndAddress: postItem.get('postEndAddress'),
-            postStartDateTime: postItem.get('postStartDateTime'),
-            postNotes: postItem.get('postNotes'),
-            postSeatNumber: postItem.get('postSeatNumber'),
-            // 车辆信息
-            driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
-            driverCarModel: postItem.get('driverCarModel'),
-            driverCarColor: postItem.get('driverCarColor'),
-            driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
-            // 司机信息
-            driverName: postItem.get('driverName'),
-            driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
-            driverGender: postItem.get('driverGender'),
-            driverUserId: postItem.get('driverUserId'),
-            driverSchool: postItem.get('driverSchool')
-          }
-          this.setData({postData: postData, post: post})
-        }, function (error) {
-          // 异常处理
-        })
+    const application = new AV.Query('Application')
+
+    let applicationData = {
+      applicationNotes: null,
+      applicationStartAddress: null
+    }
+
+    if (applicationId) {
+      // 修改预约信息
+      application.get(applicationId)
+                 .then(function (applicationItem) {
+                   const postData = {
+                     postStartAddress: applicationItem.get('postStartAddress'),
+                     postEndAddress: applicationItem.get('postEndAddress'),
+                     postStartDateTime: applicationItem.get('postStartDateTime'),
+                     postNotes: applicationItem.get('postNotes'),
+                     postSeatNumber: applicationItem.get('postSeatNumber'),
+                     postLeftNumber: applicationItem.get('postLeftNumber'),
+                     // 车辆信息
+                     driverCarSeatNumber: applicationItem.get('driverCarSeatNumber'),
+                     driverCarModel: applicationItem.get('driverCarModel'),
+                     driverCarColor: applicationItem.get('driverCarColor'),
+                     driverCarPlateNumber: applicationItem.get('driverCarPlateNumber'),
+                     // 司机信息
+                     driverName: applicationItem.get('driverName'),
+                     driverMobilePhoneNumber: applicationItem.get('driverMobilePhoneNumber'),
+                     driverGender: applicationItem.get('driverGender'),
+                     driverUserId: applicationItem.get('driverUserId'),
+                     driverSchool: applicationItem.get('driverSchool'),
+                     driver: applicationItem.get('driver')
+                   }
+                   applicationData = {
+                     applicationNotes: applicationItem.get('applicationNotes'),
+                     applicationStartAddress: applicationItem.get('applicationStartAddress')
+                   }
+                   console.log(applicationData)
+                   that.setData({
+                     postData: postData,
+                     applicationData: applicationData
+                   })
+                 }, function (error) {
+                   // 异常处理
+                 })
+    }
+    else {
+      post.get(postId)
+          .then(function (postItem) {
+            const postData = {
+              postStartAddress: postItem.get('postStartAddress'),
+              postEndAddress: postItem.get('postEndAddress'),
+              postStartDateTime: postItem.get('postStartDateTime'),
+              postNotes: postItem.get('postNotes'),
+              postSeatNumber: postItem.get('postSeatNumber'),
+              postLeftNumber: postItem.get('postLeftNumber'),
+              // 车辆信息
+              driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
+              driverCarModel: postItem.get('driverCarModel'),
+              driverCarColor: postItem.get('driverCarColor'),
+              driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
+              // 司机信息
+              driverName: postItem.get('driverName'),
+              driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
+              driverGender: postItem.get('driverGender'),
+              driverUserId: postItem.get('driverUserId'),
+              driverSchool: postItem.get('driverSchool'),
+              driver: postItem.get('driver')
+            }
+            console.log(postData)
+
+            that.setData({postData: postData, post: postItem, applicationData: applicationData})
+          }, function (error) {
+            // 异常处理
+          })
+    }
+
   },
   data: {},
   formSubmit: function (e) {
-    const form = e.detail.value
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
-    const user = AV.User.current()
-    const Application = AV.Object.extend('Application')
-
-    const passengerData = {
-      passengerName: user.get('name'),
-      passengerPhone: user.get('phone'),
-      passengerGender: user.get('gender'),
-      passengerUserId: user.get('userId'),
-      passengerSchool: user.get('school'),
+    const postData = this.data.postData
+    const post = this.data.post
+    let form = e.detail.value
+    form = {
+      applicationStartAddress: form.applicationStartAddress,
+      applicationNotes: form.applicationNotes
     }
 
-    let application = new Application()
-    application.set(form)  // app信息
-    application.set('passenger', passengerData)  // passenger
-    application.set('post', this.data.post)
-    application.set(this.data.postData)
-    application.save()
-               .then(function (applicationItem) {
-                 console.log('objectId is ' + applicationItem.id)
-                 wx.showToast({
-                   title: '发布成功',
-                   icon: 'success'
+    if (this.data.applicationId) {
+      let application = AV.Object.createWithoutData('Application', this.data.applicationId)
+      application.set(form)
+                 .save()
+                 .then(function (newApplication) {
+                   setTimeout(function () {
+                     wx.showToast({
+                       title: '提交成功'
+                     }, 500)
+                   })
                  })
-               }, function (error) {
-                 console.error(error)
-               })
+                 .then(function () {
+                   wx.navigateBack({number: 1})
+                 })
+                 .catch(console.error)
+
+    }
+    else {
+      console.log('form发生了submit事件，携带数据为：', e.detail.value)
+      const user = AV.User.current()
+      const Application = AV.Object.extend('Application')
+
+      const passengerData = {
+        passengerName: user.get('name'),
+        passengerMobilePhoneNumber: user.get('mobilePhoneNumber'),
+        passengerGender: user.get('userGender'),
+        passengerUserId: user.get('userId'),
+        passengerSchool: user.get('school'),
+      }
+
+      let application = new Application()
+
+      application.set(form)  // app信息
+      application.set('passenger', user)  // passenger
+      application.set(passengerData)
+      // application.set('post', post)
+      application.set(postData)
+      application.save()
+                 .then(function (applicationItem) {
+                   console.log('objectId is ' + applicationItem.id)
+                   wx.showToast({
+                     title: '发布成功',
+                     icon: 'success'
+                   })
+                   wx.navigateBack({number: 1})
+                 }, function (error) {
+                   console.error(error)
+                 })
+    }
 
     // const form = e.detail.value
     // const postId = '57328ca079bc44005c2472d0'
@@ -107,7 +174,7 @@ Page({
     //
     //       const passengerData = {
     //         passengerName: user.get('passengerName'),
-    //         passengerPhone: user.get('passengerPhone'),
+    //         passengerMobilePhoneNumber: user.get('passengerMobilePhoneNumber'),
     //         passengerGender: user.get('passengerGender'),
     //         passengerUserId: user.get('passengerUserId'),
     //         passengerSchool: user.get('passengerSchool'),

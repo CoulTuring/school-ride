@@ -1,18 +1,85 @@
-<view class="index">
-
-  <view class="index-bd">
-    <view class="kind-list">
-      <block wx:if="{{application.length<=0}}">
-        <view>暂无预约记录</view>
-      </block>
-      <block wx:if="{{application.length>0}}">
-        <block wx:for-items="{{application}}" wx:key="application">
-          <view class="kind-list-item" bindtap="postDetail">{{item.id}}
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}"
+            class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}"
+            bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
           </view>
         </block>
-      </block>
+        <view class="weui-navbar__slider"
+          style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <block wx:if="{{!postList}}">
+            <view class="weui-loadmore">
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+          </block>
+          <block wx:if="{{postList.length<=0}}">
+            <view>暂无预约记录</view>
+          </block>
+          <block wx:for="{{postList}}" wx:for-item="item" wx:key="postList">
+            <view bindtap='editApplication' id='{{item.id}}'
+              class="weui-media-box weui-media-box_appmsg"
+              hover-class="weui-cell_active">
+              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <image class="weui-media-box__thumb" src="{{icon60}}" />
+              </view>
+              <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">
+                  {{item.postStartAddress}}=>{{item.postEndAddress}}
+                </view>
+                <view class="weui-media-box__desc">发车时间：{{item.postStartDateTime}}</view>
+                <view class="weui-media-box__desc">
+                  剩余座位：{{item.postLeftNumber}}/{{item.postSeatNumber}}
+                </view>
+                <view class="weui-media-box__desc">备注：{{item.postNotes}}</view>
+              </view>
+            </view>
+          </block>
+
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+
+          <block wx:if="{{!applicationList}}">
+            <view class="weui-loadmore">
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+          </block>
+          <block wx:if="{{applicationList.length<=0}}">
+            <view>暂无预约记录</view>
+          </block>
+          <block wx:for="{{applicationList}}" wx:for-item="item" wx:key="applicationList">
+            <view bindtap='applicationDetail' id='{{item.id}}'
+              class="weui-media-box weui-media-box_appmsg"
+              hover-class="weui-cell_active">
+              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <image class="weui-media-box__thumb" src="{{icon60}}" />
+              </view>
+              <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">
+                  {{item.postStartAddress}}=>{{item.postEndAddress}}
+                </view>
+                <view class="weui-media-box__desc">发车时间：{{item.postStartDateTime}}</view>
+                <view class="weui-media-box__desc">
+                  上车位置：{{item.applicationStartAddress}}
+                </view>
+                <view class="weui-media-box__desc">我的备注：{{item.applicationNotes}}</view>
+              </view>
+            </view>
+          </block>
+
+        </view>
+      </view>
     </view>
   </view>
-  <button type="primary" bindtap="applicationDetail" formType="submit">预约</button>
-
 </view>
+

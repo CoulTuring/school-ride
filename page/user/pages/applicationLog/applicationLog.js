@@ -15,9 +15,9 @@ Page({
     const finishedApplication = new AV.Query('Application')
     finishedApplication.equalTo('applicationFinished', true)
 
-    const creator = new AV.Query('Application')
-    creator.equalTo('creator', user)
-    const query = AV.Query.and(finishedApplication, creator)
+    const passenger = new AV.Query('Application')
+    passenger.equalTo('passenger', user)
+    const query = AV.Query.and(finishedApplication, passenger)
 
     query.find().then(function (results) {
       const applicationLog = results.map((applicationItem) => {
@@ -31,6 +31,7 @@ Page({
           postLeftNumber: applicationItem.get('postLeftNumber')
         }
       })
+      console.log(applicationLog)
       that.setData({applicationLog})
       wx.hideToast()
     }, (error) => {
