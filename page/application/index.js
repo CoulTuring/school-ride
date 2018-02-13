@@ -36,9 +36,8 @@ Page({
       })
       .catch(console.error)
 
-
-    // TODO: 增加已预约过的车辆无法重复预约
-
+    // TODO: 增加已预约过的车辆无法重复预约、已预约满车辆无法预约
+    // TODO： post结束后提醒预约者消息推送功能、error toast
     const post = new AV.Query('Post')
     post.notEqualTo('postFinished', true)
     post.find().then(function (results) {
@@ -75,7 +74,7 @@ Page({
     const goingApplication = new AV.Query('Application')
     goingApplication.notEqualTo('applicationFinished', true)
 
-    const passenger  = new AV.Query('Application')
+    const passenger = new AV.Query('Application')
     passenger.equalTo('passenger', user)
 
     const query = AV.Query.and(goingApplication, passenger)

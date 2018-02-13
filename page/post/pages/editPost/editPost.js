@@ -66,7 +66,10 @@ Page({
           .catch(console.error)
     }
     else {
+      const acl = new AV.ACL()
+      const roleQuery = new AV.Query(AV.Role)
       let post = new Post()
+
       const driverDetail = {
         // 车辆信息
         driverCarModel: user.get('carModel'),
@@ -80,23 +83,33 @@ Page({
         driverUserId: user.get('userId'),
         driverSchool: user.get('school'),
       }
-      post.set(form)
-      post.set(driverDetail)
-      post.set('driver', user)
 
-      post.save().then(function (post) {
-        console.log('objectId is ' + post.id)
-        wx.showToast({
-          title: '发布成功',
-          icon: 'success'
-        })
-        wx.navigateBack({number: 1})
-      }, function (error) {
-        console.error(error)
+      roleQuery.equalTo('name', 'PostAdmin')
+      roleQuery.first()
+               .then(function (role) {
+                 acl.setPublicReadAccess(true)
+                 acl.setPublicWriteAccess(false)
+                 acl.setWriteAccess(user, true)
+                 acl.setRoleWriteAccess(role, true)
 
-        wx.navigateBack({number: 1})
-      })
+                 post.setACL(acl)
+                 post.set(form)
+                 post.set(driverDetail)
+                 post.set('driver', user)
+                 post.save().then(function (post) {
+                   console.log('objectId is ' + post.id)
+                   wx.showToast({
+                     title: '发布成功',
+                     icon: 'success'
+                   })
+                   wx.navigateBack({number: 1})
+                 }, function (error) {
+                   console.error(error)
 
+                   wx.navigateBack({number: 1})
+                 })
+               }, function (error) {
+               })
     }
 
   },
