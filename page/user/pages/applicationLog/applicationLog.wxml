@@ -22,13 +22,10 @@
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
               <view class="weui-media-box__title">
-                {{item.postStartAddress}}=>{{item.postEndAddress}}
+                {{item.postStartAddress}} => {{item.postEndAddress}}
               </view>
               <view class="weui-media-box__desc">发车时间：{{item.postStartDateTime}}</view>
-              <view class="weui-media-box__desc">
-                剩余座位：{{item.postLeftNumber}}/{{item.postSeatNumber}}
-              </view>
-              <view class="weui-media-box__desc">备注：{{item.postNotes}}</view>
+              <view class="weui-media-box__desc">备注：{{item.applicationNotes}}</view>
             </view>
           </view>
         </block>

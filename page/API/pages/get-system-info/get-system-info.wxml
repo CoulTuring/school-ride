@@ -12,7 +12,7 @@
             <view class="weui-label">手机型号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.model}}"></input>
+            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.model}}" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -20,7 +20,7 @@
             <view class="weui-label">微信语言</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.language}}"></input>
+            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.language}}" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -28,7 +28,7 @@
             <view class="weui-label">微信版本</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.version}}"></input>
+            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.version}}" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -36,7 +36,7 @@
             <view class="weui-label">屏幕宽度</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.windowWidth}}"></input>
+            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.windowWidth}}" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -44,7 +44,7 @@
             <view class="weui-label">屏幕高度</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.windowHeight}}"></input>
+            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.windowHeight}}" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -52,7 +52,7 @@
             <view class="weui-label">DPI</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.pixelRatio}}"></input>
+            <input class="weui-input" type="text" disabled="{{true}}" placeholder="未获取" value="{{systemInfo.pixelRatio}}" />
           </view>
         </view>
       </view>

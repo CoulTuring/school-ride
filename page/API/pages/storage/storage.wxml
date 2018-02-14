@@ -12,7 +12,7 @@
             <view class="weui-label">key</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入key" name="key" value="{{key}}" bindinput="keyChange"></input>
+            <input class="weui-input" type="text" placeholder="请输入key" name="key" value="{{key}}" bindinput="keyChange" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -20,7 +20,7 @@
             <view class="weui-label">value</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请输入value" name="data" value="{{data}}" bindinput="dataChange"></input>
+            <input class="weui-input" type="text" placeholder="请输入value" name="data" value="{{data}}" bindinput="dataChange" />
           </view>
         </view>
       </view>

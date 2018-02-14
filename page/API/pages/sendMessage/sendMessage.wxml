@@ -12,7 +12,7 @@
           <view class="weui-label">实例字段</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请输入"></input>
+          <input class="weui-input" type="text" placeholder="请输入" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -20,7 +20,7 @@
           <view class="weui-label">实例字段</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请输入"></input>
+          <input class="weui-input" type="text" placeholder="请输入" />
         </view>
       </view>
     </view>
@@ -31,7 +31,7 @@
           <view class="weui-label">跳转链接</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请输入" value="{{shareData.path}}"></input>
+          <input class="weui-input" type="text" placeholder="请输入" value="{{shareData.path}}" />
         </view>
       </view>
     </view>

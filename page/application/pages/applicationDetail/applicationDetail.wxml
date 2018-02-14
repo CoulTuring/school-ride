@@ -4,7 +4,7 @@
       <view class="weui-form-preview__hd">
         <view class="weui-form-preview__label">行程信息</view>
         <view class="weui-form-preview__value_in-hd">
-          {{applicationData.postStartAddress}}=>{{applicationData.postEndAddress}}
+          {{applicationData.postStartAddress}} => {{applicationData.postEndAddress}}
         </view>
       </view>
       <view class="weui-form-preview__bd">

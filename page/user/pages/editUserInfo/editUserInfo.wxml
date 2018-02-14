@@ -1,8 +1,9 @@
-<view class="container">
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__bd">
 
-  <view class="page-body">
-    <form catchsubmit="formSubmit" catchreset="formReset">
-      <view class="page-section-title">个人信息</view>
+
+    <form catchsubmit="formSubmit">
+      <view class="weui-cells__title">个人信息</view>
       <view class="weui-cells weui-cells_after-title">
 
 
@@ -12,7 +13,7 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="text" value="{{formData.name}}" placeholder="必填项"
-              name="name"></input>
+              name="name" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -21,17 +22,19 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="text" value="{{formData.userGender}}" placeholder="必填项"
-              name="userGender"></input>
+              name="userGender" />
           </view>
         </view>
 
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
-            <view class="weui-label">电话</view>
+            <view class="weui-label">手机号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}"  placeholder="必填项"
-              name="mobilePhoneNumber"></input>
+            <input class="weui-input" type="number" maxlength="11"
+              value="{{formData.mobilePhoneNumber}}"
+              placeholder="必填项"
+              name="mobilePhoneNumber" />
           </view>
         </view>
 
@@ -40,11 +43,12 @@
             <view class="weui-label">部门（学院）</view>
           </view>
           <view class="weui-cell__bd">
-            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-              <view class="weui-input">{{array[index]}}</view>
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}"
+              range-key="name">
+              <view class="weui-input">{{array[index].name}}</view>
             </picker>
             <!--<input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}"  placeholder="必填项"-->
-              <!--name="mobilePhoneNumber"></input>-->
+            <!--name="mobilePhoneNumber" />-->
           </view>
         </view>
 
@@ -53,14 +57,14 @@
             <view class="weui-label">工号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.userId}}"  placeholder="可选项"
-              name="userId"></input>
+            <input class="weui-input" type="number" value="{{formData.userId}}" placeholder="可选项"
+              name="userId" />
           </view>
         </view>
 
       </view>
 
-      <view class="page-section-title">车辆信息</view>
+      <view class="weui-cells__title">车辆信息</view>
       <view class="weui-cells weui-cells_after-title">
 
         <view class="weui-cell weui-cell_input">
@@ -69,7 +73,7 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="text" value="{{formData.carModel}}" placeholder="可选项"
-              name="carModel"></input>
+              name="carModel" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -77,8 +81,9 @@
             <view class="weui-label">车牌号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.carPlateNumber}}" placeholder="可选项"
-              name="carPlateNumber"></input>
+            <input class="weui-input" type="number" value="{{formData.carPlateNumber}}"
+              placeholder="可选项"
+              name="carPlateNumber" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -87,7 +92,7 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="text" value="{{formData.carColor}}" placeholder="可选项"
-              name="carColor"></input>
+              name="carColor" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -95,8 +100,9 @@
             <view class="weui-label">座位数量</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.carSeatNumber}}" placeholder="可选项"
-              name="carSeatNumber"></input>
+            <input class="weui-input" type="number" value="{{formData.carSeatNumber}}"
+              placeholder="可选项"
+              name="carSeatNumber" />
           </view>
         </view>
 
@@ -109,8 +115,7 @@
       </view>
 
       <view class="btn-area">
-        <button type="primary" formType="submit">Submit</button>
-        <button formType="reset">Reset</button>
+        <button type="primary" formType="submit">提交</button>
       </view>
     </form>
   </view>

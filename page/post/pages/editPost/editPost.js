@@ -2,7 +2,9 @@
 import AV from '../../../../libs/av-weapp-min'
 
 Page({
-  data: {},
+  data: {
+    submitting: false
+  },
   onLoad: function (options) {
     const postId = options.postId || null
     this.setData({postId})
@@ -36,17 +38,17 @@ Page({
 
   },
   formSubmit: function (e) {
-    let form = e.detail.value
-    form = {
-      postStartAddress: form.postStartAddress,
-      postEndAddress: form.postEndAddress,
-      postSeatNumber: Number(form.postSeatNumber),
-      postStartDateTime: form.postStartDateTime,
-      postNotes: form.postNotes
-    }
-
+    const that = this
+    that.setData({submitting: !that.data.submitting})
     const user = AV.User.current()
     const Post = AV.Object.extend('Post')
+    const form = {
+      postStartAddress: e.detail.value.postStartAddress,
+      postEndAddress: e.detail.value.postEndAddress,
+      postSeatNumber: Number(e.detail.value.postSeatNumber),
+      postStartDateTime: e.detail.value.postStartDateTime,
+      postNotes: e.detail.value.postNotes
+    }
 
     if (this.data.postId) {
       // 新建对象
@@ -56,11 +58,12 @@ Page({
           .then(function (newPost) {
             setTimeout(function () {
               wx.showToast({
-                title: '提交成功'
+                title: '修改成功'
               }, 500)
             })
           })
           .then(function () {
+            that.setData({submitting: !that.data.submitting})
             wx.navigateBack({number: 1})
           })
           .catch(console.error)
@@ -96,27 +99,22 @@ Page({
                  post.set(form)
                  post.set(driverDetail)
                  post.set('driver', user)
-                 post.save().then(function (post) {
-                   console.log('objectId is ' + post.id)
-                   wx.showToast({
-                     title: '发布成功',
-                     icon: 'success'
-                   })
-                   wx.navigateBack({number: 1})
-                 }, function (error) {
-                   console.error(error)
-
-                   wx.navigateBack({number: 1})
-                 })
-               }, function (error) {
+                 post.save()
+                     .then(function (post) {
+                       setTimeout(function () {
+                         wx.showToast({
+                           title: '提交成功'
+                         }, 500)
+                       })
+                     })
+                     .then(function () {
+                       that.setData({submitting: !that.data.submitting})
+                       wx.navigateBack({number: 1})
+                     })
+                     .catch()
+               })
+               .catch(function () {
                })
     }
-
-  },
-  formReset: function (e) {
-    console.log('form发生了reset事件，携带数据为：', e.detail.value)
-    this.setData({
-      chosen: ''
-    })
   }
 })

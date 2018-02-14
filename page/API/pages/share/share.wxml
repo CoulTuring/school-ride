@@ -12,7 +12,7 @@
           <view class="weui-label">标题</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{shareData.title}}"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{shareData.title}}" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -20,7 +20,7 @@
           <view class="weui-label">描述</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{shareData.desc}}"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{shareData.desc}}" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -28,7 +28,7 @@
           <view class="weui-label">跳转页面</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{shareData.path}}"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{shareData.path}}" />
         </view>
       </view>
     </view>

@@ -1,7 +1,11 @@
 // import { school } from '../../../../config'
 import AV from '../../../../libs/av-weapp-min'
+import { validate, validateRequired } from '../../../../util/validate'
 
 Page({
+  data: {
+    submitting: false
+  },
   onLoad: function (options) {
 
     const postId = options.postId || null
@@ -85,14 +89,28 @@ Page({
     }
 
   },
-  data: {},
+  validate (e) {
+    this.setData({
+      [e.currentTarget.dataset.name]: e.detail.value
+    })
+    validate(e, this)
+  },
+
   formSubmit: function (e) {
+    const that = this
+    that.setData({submitting: !that.data.submitting})
     const postData = this.data.postData
     const post = this.data.post
-    let form = e.detail.value
-    form = {
-      applicationStartAddress: form.applicationStartAddress,
-      applicationNotes: form.applicationNotes
+
+    // validateRequired(['applicationStartAddress'], this)
+    // if ('' === this.data.form.$invalidMsg) {
+    //   console.log('invalid')
+    // } else {
+    //   console.log('valid')
+    // }
+    const form = {
+      applicationStartAddress: e.detail.value.applicationStartAddress,
+      applicationNotes: e.detail.value.applicationNotes
     }
 
     if (this.data.applicationId) {
@@ -102,11 +120,12 @@ Page({
                  .then(function (newApplication) {
                    setTimeout(function () {
                      wx.showToast({
-                       title: '提交成功'
+                       title: '修改成功'
                      }, 500)
                    })
                  })
                  .then(function () {
+                   that.setData({submitting: !that.data.submitting})
                    wx.navigateBack({number: 1})
                  })
                  .catch(console.error)
@@ -141,15 +160,17 @@ Page({
                  application.setACL(acl)
                  application.save()
                             .then(function (applicationItem) {
-                              console.log('objectId is ' + applicationItem.id)
-                              wx.showToast({
-                                title: '发布成功',
-                                icon: 'success'
+                              setTimeout(function () {
+                                wx.showToast({
+                                  title: '提交成功'
+                                }, 500)
                               })
-                              wx.navigateBack({number: 1})
-                            }, function (error) {
-                              console.error(error)
                             })
+                            .then(function () {
+                              that.setData({submitting: !that.data.submitting})
+                              wx.navigateBack({number: 1})
+                            })
+                            .catch(console.error)
                }, function (error) {
                })
     }

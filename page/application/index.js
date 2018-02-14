@@ -10,6 +10,12 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0
   },
+  onPullDownRefresh: function () {
+    this.loadInitialApplication()
+        .then(() => {
+          wx.stopPullDownRefresh()
+        })
+  },
   onLoad: function () {
     const that = this
     wx.getSystemInfo({
@@ -29,19 +35,43 @@ Page({
             console.log(userInfo)
             user.set(userInfo).save().then(function (user) {
               // 成功，此时可在控制台中看到更新后的用户信息
+              if (!user.get('name')) {
+                wx.navigateTo({url: `../../user/pages/editUserInfo/editUserInfo`})
+              }
               // this.globalData.user = user.toJSON()
             }).catch(console.error)
           }
         })
       })
       .catch(console.error)
+  },
+  onShow: function () {
+    this.loadInitialApplication()
 
     // TODO: 增加已预约过的车辆无法重复预约、已预约满车辆无法预约
     // TODO： post结束后提醒预约者消息推送功能、error toast
+
+  },
+  loadInitialApplication: function () {
+    const that = this
     const post = new AV.Query('Post')
     post.notEqualTo('postFinished', true)
-    post.find().then(function (results) {
-      const postList = results.map((postItem) => {
+
+    const user = AV.User.current()
+
+    const goingApplication = new AV.Query('Application')
+    goingApplication.notEqualTo('applicationFinished', true)
+
+    const passenger = new AV.Query('Application')
+    passenger.equalTo('passenger', user)
+
+    const query = AV.Query.and(goingApplication, passenger)
+
+    return Promise.all([post.find(), query.find()]).then(function (values) {
+      console.log(values)
+      const postDataList = values[0] || []
+      const applicationDataList = values[1] || []
+      const postList = postDataList.map((postItem) => {
         return {
           id: postItem.id,
           postStartAddress: postItem.get('postStartAddress'),
@@ -63,24 +93,8 @@ Page({
           driverSchool: postItem.get('driverSchool'),
         }
       })
-      console.log(postList)
-      that.setData({postList})
-      wx.hideToast()
-    }, (error) => {
-      console.log(error)
-    })
 
-    const user = AV.User.current()
-    const goingApplication = new AV.Query('Application')
-    goingApplication.notEqualTo('applicationFinished', true)
-
-    const passenger = new AV.Query('Application')
-    passenger.equalTo('passenger', user)
-
-    const query = AV.Query.and(goingApplication, passenger)
-
-    query.find().then(function (results) {
-      const applicationList = results.map((applicationItem) => {
+      const applicationList = applicationDataList.map((applicationItem) => {
         return {
           id: applicationItem.id,
           postStartAddress: applicationItem.get('postStartAddress'),
@@ -108,13 +122,11 @@ Page({
           applicationFinished: applicationItem.get('applicationFinished'),
         }
       })
-      console.log(applicationList)
-      that.setData({applicationList})
-      wx.hideToast()
-    }, (error) => {
-      console.log(error)
-    })
 
+      console.log(applicationList)
+      console.log(postList)
+      return that.setData({postList, applicationList})
+    })
   },
   tabClick: function (e) {
     this.setData({
@@ -123,7 +135,9 @@ Page({
     })
   },
   applicationDetail: (event) => {
+    const app = getApp()
     const applicationId = event.currentTarget.id
+    app.applicationId = applicationId
     wx.navigateTo({url: `./pages/applicationDetail/applicationDetail?applicationId=${applicationId}`})
   },
   editApplication: (event) => {

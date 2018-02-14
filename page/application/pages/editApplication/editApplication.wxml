@@ -6,7 +6,7 @@
       <view class="weui-form-preview__hd">
         <view class="weui-form-preview__label">行程</view>
         <view class="weui-form-preview__value_in-hd">
-          {{postData.postStartAddress}}=>{{postData.postEndAddress}}
+          {{postData.postStartAddress}} => {{postData.postEndAddress}}
         </view>
       </view>
       <view class="weui-form-preview__bd">
@@ -51,26 +51,36 @@
 
 
     <form catchsubmit="formSubmit">
-      <view class="weui-cells__title">乘车信息</view>
+
+      <view class="weui-cells__title">上车位置</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">上车位置</view>
-          </view>
           <view class="weui-cell__bd">
             <input class="weui-input" name='applicationStartAddress'
               value='{{applicationData.applicationStartAddress}}' placeholder="请输入上车位置" />
+            <!--<icon wx:if="{{applicationData.applicationStartAddress!==undefined}}"-->
+            <!--type="{{applicationData.applicationStartAddress?'warn':'success'}}"-->
+            <!--size="16" />-->
           </view>
         </view>
+      </view>
+
+      <view class="weui-cells__title">备注</view>
+      <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="备注" style="height: 3.3em"
+            <textarea class="weui-textarea" placeholder="请输入备注" style="height: 3.3em"
               name='applicationNotes' value='{{applicationData.applicationNotes}}' />
           </view>
         </view>
       </view>
+
+
       <view class="weui-btn-area">
-          <button class="weui-btn" type="primary" bindtap="showTopTips" formType="submit">{{applicationId?"修改":"预约"}}</button>
+        <button class="weui-btn" type="primary" bindtap="showTopTips" formType="submit"
+          disabled="{{submitting}}">
+          {{applicationId?"修改":"预约"}}
+        </button>
         <!--<button formType="reset">Reset</button>-->
       </view>
     </form>

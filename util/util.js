@@ -1,4 +1,6 @@
-function formatTime(time) {
+import { schools } from './optionsValue'
+
+function formatTime (time) {
   if (typeof time !== 'number' || time < 0) {
     return time
   }
@@ -15,7 +17,7 @@ function formatTime(time) {
   }).join(':')
 }
 
-function formatLocation(longitude, latitude) {
+function formatLocation (longitude, latitude) {
   if (typeof longitude === 'string' && typeof latitude === 'string') {
     longitude = parseFloat(longitude)
     latitude = parseFloat(latitude)
@@ -30,7 +32,15 @@ function formatLocation(longitude, latitude) {
   }
 }
 
+function findSchoolIndexByOptions (schoolId) {
+  const schoolIndex = schools.findIndex(function (school) {
+    return school.id === schoolId
+  })
+  return schoolIndex === -1 ? schools.length - 1 : schoolIndex
+}
+
 module.exports = {
   formatTime: formatTime,
-  formatLocation: formatLocation
+  formatLocation: formatLocation,
+  findSchoolIndexByOptions: findSchoolIndexByOptions
 }

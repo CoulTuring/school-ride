@@ -11,7 +11,7 @@
           <view class="weui-label">购买地点</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.address}}" name="address"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.address}}" name="address" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -19,7 +19,7 @@
           <view class="weui-label">购买时间</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.time}}" name="time"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.time}}" name="time" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -27,7 +27,7 @@
           <view class="weui-label">物品名称</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.name}}" name="name"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.name}}" name="name" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -35,7 +35,7 @@
           <view class="weui-label">交易单号</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.serial}}" name="serial"></input>
+          <input class="weui-input" type="text" disabled="{{true}}" value="{{formData.serial}}" name="serial" />
         </view>
       </view>
     </view>

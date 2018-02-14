@@ -1,7 +1,7 @@
 <view class="container">
 
   <view class="page-body">
-    <form catchsubmit="formSubmit" catchreset="formReset">
+    <form catchsubmit="formSubmit">
       <view class="page-section-title">个人信息</view>
       <view class="weui-cells weui-cells_after-title">
 
@@ -13,7 +13,7 @@
           <view class="weui-cell__bd">
             <input class="weui-input" type="text" value="{{formData.postStartAddress}}"
               placeholder="必填项"
-              name="postStartAddress"></input>
+              name="postStartAddress" />
           </view>
         </view>
 
@@ -23,7 +23,7 @@
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" type="text" value="{{formData.postEndAddress}}" placeholder="必填项"
-              name="postEndAddress"></input>
+              name="postEndAddress" />
           </view>
         </view>
 
@@ -49,7 +49,7 @@
           <view class="weui-cell__bd">
             <input class="weui-input" type="date" value="{{formData.postStartDateTime}}"
               placeholder=""
-              name="postStartDateTime"></input>
+              name="postStartDateTime" />
           </view>
         </view>
 
@@ -60,7 +60,7 @@
           <view class="weui-cell__bd">
             <input class="weui-input" type="number" value="{{formData.postSeatNumber}}"
               placeholder=""
-              name="postSeatNumber"></input>
+              name="postSeatNumber" />
           </view>
         </view>
 
@@ -80,8 +80,7 @@
       </view>
 
       <view class="btn-area">
-        <button type="primary" formType="submit">Submit</button>
-        <button formType="reset">Reset</button>
+        <button type="primary" formType="submit">提交</button>
       </view>
     </form>
   </view>

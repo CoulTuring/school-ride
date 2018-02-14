@@ -1,14 +1,15 @@
 <view class="page">
   <view class="page-bd">
+    <block wx:if="{{!postList}}">
+      <view class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view>
+    </block>
     <view class="weui-panel weui-panel_access">
       <view class="weui-panel__bd">
 
-        <block wx:if="{{!postList}}">
-          <view class="weui-loadmore">
-            <view class="weui-loading"></view>
-            <view class="weui-loadmore__tips">正在加载</view>
-          </view>
-        </block>
+
         <block wx:if="{{postList.length<=0}}">
           <view>暂无发布中行程</view>
         </block>
@@ -23,7 +24,7 @@
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
               <view class="weui-media-box__title">
-                {{item.postStartAddress}}=>{{item.postEndAddress}}
+                {{item.postStartAddress}} => {{item.postEndAddress}}
               </view>
               <view class="weui-media-box__desc">发车时间：{{item.postStartDateTime}}</view>
               <view class="weui-media-box__desc">

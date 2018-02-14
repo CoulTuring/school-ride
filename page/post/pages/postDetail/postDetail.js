@@ -1,69 +1,77 @@
 import AV from '../../../../libs/av-weapp-min'
 
 Page({
-
   data: {},
-  onLoad: function (options) {
+  onPullDownRefresh: function () {
+    this.loadPostDetail()
+        .then(() => {
+          wx.stopPullDownRefresh()
+        })
+  },
+  onShow: function () {
+    this.loadPostDetail()
+  },
+  loadPostDetail: function () {
     const that = this
-    this.setData({postId: options.postId})
+    const app = getApp()
+    const postId = app.postId
+    this.setData({postId})
     wx.showToast({
       title: 'loading...',
       icon: 'loading'
     })
     const post = new AV.Query('Post')
     const application = new AV.Query('Application')
-    post.get(options.postId)
-        .then(function (postItem) {
-          let postData = {
-            // 发布信息
-            postStartAddress: postItem.get('postStartAddress'),
-            postEndAddress: postItem.get('postEndAddress'),
-            postStartDateTime: postItem.get('postStartDateTime'),
-            postNotes: postItem.get('postNotes'),
-            postSeatNumber: postItem.get('postSeatNumber'),
-            postLeftNumber: postItem.get('postLeftNumber'),
-            // 车辆信息
-            driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
-            driverCarModel: postItem.get('driverCarModel'),
-            driverCarColor: postItem.get('driverCarColor'),
-            driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
-            // 司机信息
-            driverName: postItem.get('driverName'),
-            driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
-            driverGender: postItem.get('driverGender'),
-            driverUserId: postItem.get('driverUserId'),
-            driverSchool: postItem.get('driverSchool'),
-          }
-          that.setData({postData})
+    return post.get(postId)
+               .then(function (postItem) {
+                 let postData = {
+                   // 发布信息
+                   postStartAddress: postItem.get('postStartAddress'),
+                   postEndAddress: postItem.get('postEndAddress'),
+                   postStartDateTime: postItem.get('postStartDateTime'),
+                   postNotes: postItem.get('postNotes'),
+                   postSeatNumber: postItem.get('postSeatNumber'),
+                   postLeftNumber: postItem.get('postLeftNumber'),
+                   // 车辆信息
+                   driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
+                   driverCarModel: postItem.get('driverCarModel'),
+                   driverCarColor: postItem.get('driverCarColor'),
+                   driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
+                   // 司机信息
+                   driverName: postItem.get('driverName'),
+                   driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
+                   driverGender: postItem.get('driverGender'),
+                   driverUserId: postItem.get('driverUserId'),
+                   driverSchool: postItem.get('driverSchool'),
+                 }
+                 that.setData({postData})
+                 application.equalTo('post', postItem)
+                 return application.find()
+                                   .then((results) => {
+                                     console.log(results)
+                                     const applicationList = results.map((applicationItem) => {
+                                       return {
+                                         id: applicationItem.id,
+                                         passengerName: applicationItem.get('passengerName'),
+                                         passengerMobilePhoneNumber: applicationItem.get('passengerMobilePhoneNumber'),
+                                         passengerGender: applicationItem.get('passengerGender'),
+                                         passengerUserId: applicationItem.get('passengerUserId'),
+                                         passengerSchool: applicationItem.get('passengerSchool'),
 
-          application.equalTo('post', postItem)
-          application.find()
-                     .then((results) => {
-                       console.log(results)
-                       const applicationList = results.map((applicationItem) => {
-                         return {
-                           id: applicationItem.id,
-                           passengerName: applicationItem.get('passengerName'),
-                           passengerMobilePhoneNumber: applicationItem.get('passengerMobilePhoneNumber'),
-                           passengerGender: applicationItem.get('passengerGender'),
-                           passengerUserId: applicationItem.get('passengerUserId'),
-                           passengerSchool: applicationItem.get('passengerSchool'),
-
-                           applicationStartAddress: applicationItem.get('applicationStartAddress'),
-                           applicationNotes: applicationItem.get('applicationNotes'),
-                           applicationCancelDateTime: applicationItem.get('applicationCancelDateTime'),
-                           applicationCanceled: applicationItem.get('applicationCanceled'),
-                           applicationFinishDateTime: applicationItem.get('applicationFinishDateTime'),
-                           applicationFinished: applicationItem.get('applicationFinished'),
-                         }
-                       })
-                       console.log(applicationList)
-                       that.setData({applicationList})
-                       wx.hideToast()
-                     })
-                     .catch((error) => {})
-        })
-        .catch((error) => {})
+                                         applicationStartAddress: applicationItem.get('applicationStartAddress'),
+                                         applicationNotes: applicationItem.get('applicationNotes'),
+                                         applicationCancelDateTime: applicationItem.get('applicationCancelDateTime'),
+                                         applicationCanceled: applicationItem.get('applicationCanceled'),
+                                         applicationFinishDateTime: applicationItem.get('applicationFinishDateTime'),
+                                         applicationFinished: applicationItem.get('applicationFinished'),
+                                       }
+                                     })
+                                     console.log(applicationList)
+                                     return that.setData({applicationList})
+                                   })
+                                   .catch((error) => {})
+               })
+               .catch((error) => {})
   },
   onCancel: function () {
     const postId = this.data.postId

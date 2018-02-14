@@ -2,8 +2,7 @@ import AV from '../../../../libs/av-weapp-min'
 
 Page({
 
-  data: {
-  },
+  data: {},
   onLoad: function () {
 
     const that = this
@@ -26,7 +25,7 @@ Page({
           postStartAddress: applicationItem.get('postStartAddress'),
           postEndAddress: applicationItem.get('postEndAddress'),
           postStartDateTime: applicationItem.get('postStartDateTime'),
-          postNotes: applicationItem.get('postNotes'),
+          applicationNotes: applicationItem.get('applicationNotes'),
           postSeatNumber: applicationItem.get('postSeatNumber'),
           postLeftNumber: applicationItem.get('postLeftNumber')
         }
