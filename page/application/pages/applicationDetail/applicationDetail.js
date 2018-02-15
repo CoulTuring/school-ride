@@ -1,4 +1,5 @@
 import AV from '../../../../libs/av-weapp-min'
+import {leanError} from '../../../common/common'
 
 Page({
   data: {},
@@ -55,6 +56,7 @@ Page({
                         }
                         return that.setData({applicationData})
                       })
+                      .catch(function () {console.log('test')})
   },
   onCancel: function () {
     const applicationId = this.data.applicationId
@@ -74,8 +76,9 @@ Page({
                                         console.log(newApplication)
                                         wx.navigateBack({number: 1})
                                       })
+                                      .catch(function () {console.log('test')})
                      })
-                     .catch((error) => {console.log(error)})
+                     .catch(function () {console.log('test')})
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

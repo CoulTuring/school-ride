@@ -1,6 +1,7 @@
 // import { school } from '../../../../config'
 import AV from '../../../../libs/av-weapp-min'
 import { validate, validateRequired } from '../../../../util/validate'
+import { leanError } from '../../../common/common'
 
 Page({
   data: {
@@ -54,9 +55,8 @@ Page({
                      postData: postData,
                      applicationData: applicationData
                    })
-                 }, function (error) {
-                   // 异常处理
                  })
+                 .catch(function () {console.log('test')})
     }
     else {
 
@@ -103,10 +103,7 @@ Page({
                                   applicationData: applicationData,
                                   submitting: true
                                 })
-                                wx.showToast({
-                                  icon: 'none',
-                                  title: '您已预约过该行程'
-                                }, 1500)
+                                wx.showToast({icon: 'none', title: '您已预约过该行程', duration: 2000})
                               }
                               else {
                                 that.setData({
@@ -116,10 +113,11 @@ Page({
                                 })
                               }
                             })
+                            .catch(function () {console.log('test')})
+          })
+          .catch(function () {console.log('test')})
 
-          }, function (error) {})
     }
-
   },
   validate (e) {
     this.setData({
@@ -153,14 +151,14 @@ Page({
                    setTimeout(function () {
                      wx.showToast({
                        title: '修改成功'
-                     }, 500)
-                   })
+                     })
+                   }, 1500)
                  })
                  .then(function () {
                    that.setData({submitting: !that.data.submitting})
                    wx.navigateBack({number: 1})
                  })
-                 .catch(console.error)
+                 .catch(function () {console.log('test')})
 
     }
     else {
@@ -193,18 +191,16 @@ Page({
                  application.save()
                             .then(function (applicationItem) {
                               setTimeout(function () {
-                                wx.showToast({
-                                  title: '提交成功'
-                                }, 500)
-                              })
+                                wx.showToast({title: '提交成功'})
+                              }, 1500)
                             })
                             .then(function () {
                               that.setData({submitting: !that.data.submitting})
                               wx.navigateBack({number: 1})
                             })
-                            .catch(console.error)
-               }, function (error) {
+                            .catch(function () {console.log('test')})
                })
+               .catch(function () {console.log('test')})
     }
   },
   formReset: function (e) {

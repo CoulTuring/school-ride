@@ -1,5 +1,6 @@
 // import { school } from '../../../../config'
 import AV from '../../../../libs/av-weapp-min'
+import {leanError} from '../../../common/common'
 
 Page({
   data: {
@@ -24,6 +25,7 @@ Page({
            }, function (error) {
              // 异常处理
            })
+           .catch(function () {console.log('test')})
     }
     else {
       const formData = {
@@ -60,14 +62,14 @@ Page({
             setTimeout(function () {
               wx.showToast({
                 title: '修改成功'
-              }, 500)
-            })
+              })
+            },1500)
           })
           .then(function () {
             that.setData({submitting: !that.data.submitting})
             wx.navigateBack({number: 1})
           })
-          .catch(console.error)
+          .catch(function () {console.log('test')})
     }
     else {
       const acl = new AV.ACL()
@@ -105,17 +107,16 @@ Page({
                        setTimeout(function () {
                          wx.showToast({
                            title: '提交成功'
-                         }, 500)
-                       })
+                         })
+                       },1500)
                      })
                      .then(function () {
                        that.setData({submitting: !that.data.submitting})
                        wx.navigateBack({number: 1})
                      })
-                     .catch()
+                     .catch(function () {console.log('test')})
                })
-               .catch(function () {
-               })
+               .catch(function () {console.log('test')})
     }
   }
 })

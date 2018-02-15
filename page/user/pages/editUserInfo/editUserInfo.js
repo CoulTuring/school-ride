@@ -2,6 +2,7 @@
 import AV from '../../../../libs/av-weapp-min'
 import { schools } from '../../../../util/optionsValue'
 import { findSchoolIndexByOptions } from '../../../../util/util'
+import {leanError} from '../../../common/common'
 
 Page({
   data: {
@@ -77,14 +78,14 @@ Page({
             setTimeout(function () {
               wx.showToast({
                 title: '提交成功'
-              }, 500)
+              })
               // this.globalData.user = user.toJSON()
-            })
+            }, 1500)
           })
           .then(function () {
             wx.navigateBack({number: 1})
           })
-          .catch(console.error)
+          .catch(function () {console.log('test')})
     }
   }
 })

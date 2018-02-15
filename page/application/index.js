@@ -1,4 +1,5 @@
 import AV from '../../libs/av-weapp-min'
+import { leanError } from '../common/common'
 
 const sliderWidth = 96 // 需要设置slider的宽度，用于计算中间位置
 
@@ -33,17 +34,20 @@ Page({
           success: function ({userInfo}) {
             // 更新当前用户的信息
             console.log(userInfo)
-            user.set(userInfo).save().then(function (user) {
-              // 成功，此时可在控制台中看到更新后的用户信息
-              if (!user.get('name')) {
-                wx.navigateTo({url: `../../user/pages/editUserInfo/editUserInfo`})
-              }
-              // this.globalData.user = user.toJSON()
-            }).catch(console.error)
+            user.set(userInfo)
+                .save()
+                .then(function (user) {
+                  // 成功，此时可在控制台中看到更新后的用户信息
+                  if (!user.get('name')) {
+                    wx.navigateTo({url: `../../user/pages/editUserInfo/editUserInfo`})
+                  }
+                  // this.globalData.user = user.toJSON()
+                })
+                //test
           }
         })
       })
-      .catch(console.error)
+      //test
   },
   onShow: function () {
     this.loadInitialApplication()
@@ -72,66 +76,68 @@ Page({
 
     const query = AV.Query.and(goingApplication, passenger)
 
-    return Promise.all([post.find(), query.find()]).then(function (values) {
-      console.log(values)
-      const postDataList = values[0] || []
-      const applicationDataList = values[1] || []
-      const postList = postDataList.map((postItem) => {
-        return {
-          id: postItem.id,
-          postStartAddress: postItem.get('postStartAddress'),
-          postEndAddress: postItem.get('postEndAddress'),
-          postStartDateTime: postItem.get('postStartDateTime'),
-          postNotes: postItem.get('postNotes'),
-          postLeftNumber: postItem.get('postLeftNumber'),
-          postSeatNumber: postItem.get('postSeatNumber'),
-          // 车辆信息
-          driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
-          driverCarModel: postItem.get('driverCarModel'),
-          driverCarColor: postItem.get('driverCarColor'),
-          driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
-          // 司机信息
-          driverName: postItem.get('driverName'),
-          driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
-          driverGender: postItem.get('driverGender'),
-          driverUserId: postItem.get('driverUserId'),
-          driverSchool: postItem.get('driverSchool'),
-        }
-      })
+    return Promise.all([post.find(), query.find()])
+                  .then(function (values) {
+                    console.log(values)
+                    const postDataList = values[0] || []
+                    const applicationDataList = values[1] || []
+                    const postList = postDataList.map((postItem) => {
+                      return {
+                        id: postItem.id,
+                        postStartAddress: postItem.get('postStartAddress'),
+                        postEndAddress: postItem.get('postEndAddress'),
+                        postStartDateTime: postItem.get('postStartDateTime'),
+                        postNotes: postItem.get('postNotes'),
+                        postLeftNumber: postItem.get('postLeftNumber'),
+                        postSeatNumber: postItem.get('postSeatNumber'),
+                        // 车辆信息
+                        driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
+                        driverCarModel: postItem.get('driverCarModel'),
+                        driverCarColor: postItem.get('driverCarColor'),
+                        driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
+                        // 司机信息
+                        driverName: postItem.get('driverName'),
+                        driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
+                        driverGender: postItem.get('driverGender'),
+                        driverUserId: postItem.get('driverUserId'),
+                        driverSchool: postItem.get('driverSchool'),
+                      }
+                    })
 
-      const applicationList = applicationDataList.map((applicationItem) => {
-        return {
-          id: applicationItem.id,
-          postStartAddress: applicationItem.get('postStartAddress'),
-          postEndAddress: applicationItem.get('postEndAddress'),
-          postStartDateTime: applicationItem.get('postStartDateTime'),
-          postNotes: applicationItem.get('postNotes'),
-          postSeatNumber: applicationItem.get('postSeatNumber'),
-          // 车辆信息
-          driverCarSeatNumber: applicationItem.get('driverCarSeatNumber'),
-          driverCarModel: applicationItem.get('driverCarModel'),
-          driverCarColor: applicationItem.get('driverCarColor'),
-          driverCarPlateNumber: applicationItem.get('driverCarPlateNumber'),
-          // 司机信息
-          driverName: applicationItem.get('driverName'),
-          driverMobilePhoneNumber: applicationItem.get('driverMobilePhoneNumber'),
-          driverGender: applicationItem.get('driverGender'),
-          driverUserId: applicationItem.get('driverUserId'),
-          driverSchool: applicationItem.get('driverSchool'),
-          // 预约信息
-          applicationStartAddress: applicationItem.get('applicationStartAddress'),
-          applicationNotes: applicationItem.get('applicationNotes'),
-          applicationCancelDateTime: applicationItem.get('applicationCancelDateTime'),
-          applicationCanceled: applicationItem.get('applicationCanceled'),
-          applicationFinishDateTime: applicationItem.get('applicationFinishDateTime'),
-          applicationFinished: applicationItem.get('applicationFinished'),
-        }
-      })
+                    const applicationList = applicationDataList.map((applicationItem) => {
+                      return {
+                        id: applicationItem.id,
+                        postStartAddress: applicationItem.get('postStartAddress'),
+                        postEndAddress: applicationItem.get('postEndAddress'),
+                        postStartDateTime: applicationItem.get('postStartDateTime'),
+                        postNotes: applicationItem.get('postNotes'),
+                        postSeatNumber: applicationItem.get('postSeatNumber'),
+                        // 车辆信息
+                        driverCarSeatNumber: applicationItem.get('driverCarSeatNumber'),
+                        driverCarModel: applicationItem.get('driverCarModel'),
+                        driverCarColor: applicationItem.get('driverCarColor'),
+                        driverCarPlateNumber: applicationItem.get('driverCarPlateNumber'),
+                        // 司机信息
+                        driverName: applicationItem.get('driverName'),
+                        driverMobilePhoneNumber: applicationItem.get('driverMobilePhoneNumber'),
+                        driverGender: applicationItem.get('driverGender'),
+                        driverUserId: applicationItem.get('driverUserId'),
+                        driverSchool: applicationItem.get('driverSchool'),
+                        // 预约信息
+                        applicationStartAddress: applicationItem.get('applicationStartAddress'),
+                        applicationNotes: applicationItem.get('applicationNotes'),
+                        applicationCancelDateTime: applicationItem.get('applicationCancelDateTime'),
+                        applicationCanceled: applicationItem.get('applicationCanceled'),
+                        applicationFinishDateTime: applicationItem.get('applicationFinishDateTime'),
+                        applicationFinished: applicationItem.get('applicationFinished'),
+                      }
+                    })
 
-      console.log(applicationList)
-      console.log(postList)
-      return that.setData({postList, applicationList})
-    })
+                    console.log(applicationList)
+                    console.log(postList)
+                    return that.setData({postList, applicationList})
+                  })
+                  //test
   },
   tabClick: function (e) {
     this.setData({

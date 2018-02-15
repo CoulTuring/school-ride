@@ -1,4 +1,5 @@
 import AV from '../../../../libs/av-weapp-min'
+import {leanError} from '../../../common/common'
 
 Page({
   data: {},
@@ -69,9 +70,9 @@ Page({
                                      console.log(applicationList)
                                      return that.setData({applicationList})
                                    })
-                                   .catch((error) => {})
+                                   .catch(function () {console.log('test')})
                })
-               .catch((error) => {})
+               .catch(function () {console.log('test')})
   },
   onCancel: function () {
     const postId = this.data.postId
@@ -90,8 +91,9 @@ Page({
                     .then((newPost) => {
                       wx.navigateBack({number: 1})
                     })
+                    .catch(function () {console.log('test')})
               })
-              .catch((error) => {console.log(error)})
+              .catch(function () {console.log('test')})
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

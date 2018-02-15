@@ -1,4 +1,5 @@
 import AV from '../../libs/av-weapp-min'
+import {leanError} from '../common/common'
 
 Page({
   data: {
@@ -40,9 +41,8 @@ Page({
                   })
                   console.log(postList)
                   return that.setData({postList})
-                }, (error) => {
-                  console.log(error)
                 })
+                .catch(function () {console.log('test')})
   },
   editPost: () => {
     wx.navigateTo({url: './pages/editPost/editPost'})
