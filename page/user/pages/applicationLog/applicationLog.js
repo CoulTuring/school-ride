@@ -36,6 +36,6 @@ Page({
            that.setData({applicationLog})
            wx.hideToast()
          })
-         .catch(function () {console.log('test')})
+         .catch(function () {leanError()})
   }
 })

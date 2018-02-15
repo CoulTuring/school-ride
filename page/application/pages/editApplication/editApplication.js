@@ -56,7 +56,7 @@ Page({
                      applicationData: applicationData
                    })
                  })
-                 .catch(function () {console.log('test')})
+                 .catch(function () {leanError()})
     }
     else {
 
@@ -113,9 +113,9 @@ Page({
                                 })
                               }
                             })
-                            .catch(function () {console.log('test')})
+                            .catch(function () {leanError()})
           })
-          .catch(function () {console.log('test')})
+          .catch(function () {leanError()})
 
     }
   },
@@ -158,7 +158,7 @@ Page({
                    that.setData({submitting: !that.data.submitting})
                    wx.navigateBack({number: 1})
                  })
-                 .catch(function () {console.log('test')})
+                 .catch(function () {leanError()})
 
     }
     else {
@@ -198,9 +198,9 @@ Page({
                               that.setData({submitting: !that.data.submitting})
                               wx.navigateBack({number: 1})
                             })
-                            .catch(function () {console.log('test')})
+                            .catch(function () {leanError()})
                })
-               .catch(function () {console.log('test')})
+               .catch(function () {leanError()})
     }
   },
   formReset: function (e) {

@@ -43,11 +43,11 @@ Page({
                   }
                   // this.globalData.user = user.toJSON()
                 })
-                //test
+                .catch(function () {leanError()})
           }
         })
       })
-      //test
+      .catch(function () {leanError()})
   },
   onShow: function () {
     this.loadInitialApplication()
@@ -137,7 +137,7 @@ Page({
                     console.log(postList)
                     return that.setData({postList, applicationList})
                   })
-                  //test
+                  .catch(function () {leanError()})
   },
   tabClick: function (e) {
     this.setData({

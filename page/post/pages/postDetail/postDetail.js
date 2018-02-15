@@ -70,9 +70,9 @@ Page({
                                      console.log(applicationList)
                                      return that.setData({applicationList})
                                    })
-                                   .catch(function () {console.log('test')})
+                                   .catch(function () {leanError()})
                })
-               .catch(function () {console.log('test')})
+               .catch(function () {leanError()})
   },
   onCancel: function () {
     const postId = this.data.postId
@@ -91,9 +91,9 @@ Page({
                     .then((newPost) => {
                       wx.navigateBack({number: 1})
                     })
-                    .catch(function () {console.log('test')})
+                    .catch(function () {leanError()})
               })
-              .catch(function () {console.log('test')})
+              .catch(function () {leanError()})
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

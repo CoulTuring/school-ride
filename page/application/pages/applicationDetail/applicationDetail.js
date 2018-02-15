@@ -56,7 +56,7 @@ Page({
                         }
                         return that.setData({applicationData})
                       })
-                      .catch(function () {console.log('test')})
+                      .catch(function () {leanError()})
   },
   onCancel: function () {
     const applicationId = this.data.applicationId
@@ -76,9 +76,9 @@ Page({
                                         console.log(newApplication)
                                         wx.navigateBack({number: 1})
                                       })
-                                      .catch(function () {console.log('test')})
+                                      .catch(function () {leanError()})
                      })
-                     .catch(function () {console.log('test')})
+                     .catch(function () {leanError()})
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

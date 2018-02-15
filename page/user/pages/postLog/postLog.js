@@ -37,6 +37,6 @@ Page({
            })
            wx.hideToast()
          })
-         .catch(function () {console.log('test')})
+         .catch(function () {leanError()})
   }
 })

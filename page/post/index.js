@@ -42,7 +42,7 @@ Page({
                   console.log(postList)
                   return that.setData({postList})
                 })
-                .catch(function () {console.log('test')})
+                .catch(function () {leanError()})
   },
   editPost: () => {
     wx.navigateTo({url: './pages/editPost/editPost'})

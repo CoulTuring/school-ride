@@ -85,7 +85,7 @@ Page({
           .then(function () {
             wx.navigateBack({number: 1})
           })
-          .catch(function () {console.log('test')})
+          .catch(function () {leanError()})
     }
   }
 })

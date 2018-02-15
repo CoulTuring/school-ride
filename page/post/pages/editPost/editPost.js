@@ -25,7 +25,7 @@ Page({
            }, function (error) {
              // 异常处理
            })
-           .catch(function () {console.log('test')})
+           .catch(function () {leanError()})
     }
     else {
       const formData = {
@@ -69,7 +69,7 @@ Page({
             that.setData({submitting: !that.data.submitting})
             wx.navigateBack({number: 1})
           })
-          .catch(function () {console.log('test')})
+          .catch(function () {leanError()})
     }
     else {
       const acl = new AV.ACL()
@@ -114,9 +114,9 @@ Page({
                        that.setData({submitting: !that.data.submitting})
                        wx.navigateBack({number: 1})
                      })
-                     .catch(function () {console.log('test')})
+                     .catch(function () {leanError()})
                })
-               .catch(function () {console.log('test')})
+               .catch(function () {leanError()})
     }
   }
 })
