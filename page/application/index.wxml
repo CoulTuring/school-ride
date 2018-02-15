@@ -22,7 +22,7 @@
             </view>
           </block>
           <block wx:if="{{postList.length<=0}}">
-            <view>暂无预约记录</view>
+            <view>暂无可预约车辆</view>
           </block>
           <block wx:for="{{postList}}" wx:for-item="item" wx:key="postList">
             <view bindtap='editApplication' id='{{item.id}}'

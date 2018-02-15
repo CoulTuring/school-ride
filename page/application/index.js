@@ -48,16 +48,21 @@ Page({
   onShow: function () {
     this.loadInitialApplication()
 
-    // TODO: 增加已预约过的车辆无法重复预约、已预约满车辆无法预约
     // TODO： post结束后提醒预约者消息推送功能、error toast
-
+    // TODO: 增加表单验证   包括合法内容验证，发布乘车的剩余座位数小于车辆总作为数量
+    // TODO: 增加后端的取消乘车或取消行程的微信通知或短信通知
   },
   loadInitialApplication: function () {
     const that = this
-    const post = new AV.Query('Post')
-    post.notEqualTo('postFinished', true)
-
     const user = AV.User.current()
+
+    const postNotFinished = new AV.Query('Post')
+    postNotFinished.notEqualTo('postFinished', true)
+
+    const postLevelNumber = new AV.Query('Post')
+    postLevelNumber.greaterThan('postLeftNumber', 0)
+
+    const post = AV.Query.and(postLevelNumber, postNotFinished)
 
     const goingApplication = new AV.Query('Application')
     goingApplication.notEqualTo('applicationFinished', true)

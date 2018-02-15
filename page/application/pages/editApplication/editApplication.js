@@ -8,6 +8,7 @@ Page({
   },
   onLoad: function (options) {
 
+    const user = AV.User.current()
     const postId = options.postId || null
     const applicationId = options.applicationId || null
     this.setData({applicationId: applicationId, postId: postId})
@@ -58,34 +59,65 @@ Page({
                  })
     }
     else {
+
       post.get(postId)
           .then(function (postItem) {
-            const postData = {
-              postStartAddress: postItem.get('postStartAddress'),
-              postEndAddress: postItem.get('postEndAddress'),
-              postStartDateTime: postItem.get('postStartDateTime'),
-              postNotes: postItem.get('postNotes'),
-              postSeatNumber: postItem.get('postSeatNumber'),
-              postLeftNumber: postItem.get('postLeftNumber'),
-              // 车辆信息
-              driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
-              driverCarModel: postItem.get('driverCarModel'),
-              driverCarColor: postItem.get('driverCarColor'),
-              driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
-              // 司机信息
-              driverName: postItem.get('driverName'),
-              driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
-              driverGender: postItem.get('driverGender'),
-              driverUserId: postItem.get('driverUserId'),
-              driverSchool: postItem.get('driverSchool'),
-              driver: postItem.get('driver')
-            }
-            console.log(postData)
 
-            that.setData({postData: postData, post: postItem, applicationData: applicationData})
-          }, function (error) {
-            // 异常处理
-          })
+            const passenger = new AV.Query('Application')
+            passenger.equalTo('passenger', user)
+
+            const applicationNotFinished = new AV.Query('Application')
+            applicationNotFinished.notEqualTo('applicationFinished', true)
+
+            const thisPost = new AV.Query('Application')
+            thisPost.equalTo('post', postItem)
+
+            const existApplication = AV.Query.and(thisPost, applicationNotFinished, passenger)
+            existApplication.find()
+                            .then(function (results) {
+                              const postData = {
+                                postStartAddress: postItem.get('postStartAddress'),
+                                postEndAddress: postItem.get('postEndAddress'),
+                                postStartDateTime: postItem.get('postStartDateTime'),
+                                postNotes: postItem.get('postNotes'),
+                                postSeatNumber: postItem.get('postSeatNumber'),
+                                postLeftNumber: postItem.get('postLeftNumber'),
+                                // 车辆信息
+                                driverCarSeatNumber: postItem.get('driverCarSeatNumber'),
+                                driverCarModel: postItem.get('driverCarModel'),
+                                driverCarColor: postItem.get('driverCarColor'),
+                                driverCarPlateNumber: postItem.get('driverCarPlateNumber'),
+                                // 司机信息
+                                driverName: postItem.get('driverName'),
+                                driverMobilePhoneNumber: postItem.get('driverMobilePhoneNumber'),
+                                driverGender: postItem.get('driverGender'),
+                                driverUserId: postItem.get('driverUserId'),
+                                driverSchool: postItem.get('driverSchool'),
+                                driver: postItem.get('driver')
+                              }
+
+                              if (results.length > 0) {
+                                that.setData({
+                                  postData: postData,
+                                  post: postItem,
+                                  applicationData: applicationData,
+                                  submitting: true
+                                })
+                                wx.showToast({
+                                  icon: 'none',
+                                  title: '您已预约过该行程'
+                                }, 1500)
+                              }
+                              else {
+                                that.setData({
+                                  postData: postData,
+                                  post: postItem,
+                                  applicationData: applicationData
+                                })
+                              }
+                            })
+
+          }, function (error) {})
     }
 
   },

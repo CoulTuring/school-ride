@@ -47,6 +47,7 @@ Page({
       postEndAddress: e.detail.value.postEndAddress,
       postSeatNumber: Number(e.detail.value.postSeatNumber),
       postStartDateTime: e.detail.value.postStartDateTime,
+      postLeftNumber: Number(e.detail.value.postSeatNumber),
       postNotes: e.detail.value.postNotes
     }
 
