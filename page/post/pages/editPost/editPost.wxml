@@ -1,8 +1,14 @@
 <view class="container">
-
   <view class="page-body">
+
+    <view wx:if="{{tip}}" class="weui-loadmore">
+      <view class="weui-loadmore__tips">{{tip}}</view>
+    </view>
+    <view wx:if="{{form.$invalidMsg && form.$dirty}}" class="invalid">
+      {{form.$invalidMsg}}
+    </view>
     <form catchsubmit="formSubmit">
-      <view class="page-section-title">个人信息</view>
+      <view class="weui-cells__title">个人信息</view>
       <view class="weui-cells weui-cells_after-title">
 
 
@@ -22,65 +28,92 @@
             <view class="weui-label">终点站</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" value="{{formData.postEndAddress}}" placeholder="必填项"
+            <!--&lt;!&ndash; 校验规则：必须填写，且为电话号码 &ndash;&gt;-->
+            <!--<input class="weui-input" maxlength="11" placeholder="必填项" class="f-1 va-m input"-->
+            <!--bindblur="validate" type="number" data-name="phone" data-validator="required,phone"-->
+            <!--confirm-type="next" value="{{formData.postEndAddress}}" />-->
+            <!--&lt;!&ndash; 错误图标 &ndash;&gt;-->
+            <!--<icon wx:if="{{formData.postEndAddress!==undefined}}"-->
+            <!--type="{{formData.postEndAddress?'warn':'success'}}" size="16" />-->
+
+
+            <input class="weui-input" type="text" value="{{formData.postEndAddress}}"
+              placeholder="必填项"
               name="postEndAddress" />
           </view>
         </view>
 
       </view>
 
-      <view class="page-section-title">时间</view>
+      <view class="weui-cells__title">行程信息</view>
       <view class="weui-cells weui-cells_after-title">
 
         <!--<view class="tui-picker-content">-->
-          <!--<view class="tui-picker-name">日期时间选择器（精确到分）</view>-->
-          <!--<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">-->
-            <!--<view class="tui-picker-detail">-->
-              <!--选择日期时间: {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}-->
-            <!--</view>-->
-          <!--</picker>-->
+        <!--<view class="tui-picker-name">日期时间选择器（精确到分）</view>-->
+        <!--<picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">-->
+        <!--<view class="tui-picker-detail">-->
+        <!--选择日期时间: {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}-->
+        <!--</view>-->
+        <!--</picker>-->
         <!--</view>-->
 
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">日期</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="date" value="{{postStartDate}}" start="2018-01-01"
+              end="2019-09-01" bindchange="bindDateChange">
+              <view class="weui-input">{{postStartDate}}</view>
+            </picker>
+          </view>
+        </view>
 
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
             <view class="weui-label">时间</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="date" value="{{formData.postStartDateTime}}"
-              placeholder=""
-              name="postStartDateTime" />
+            <picker mode="time" value="{{postStartTime}}" start="00:00" end="23:59"
+              bindchange="bindTimeChange">
+              <view class="weui-input">{{postStartTime}}</view>
+            </picker>
           </view>
         </view>
-
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
             <view class="weui-label">剩余座位</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.postSeatNumber}}"
-              placeholder=""
-              name="postSeatNumber" />
+            <!--<input class="weui-input" type="number" value="{{formData.postSeatNumber}}"-->
+            <!--placeholder=""-->
+            <!--name="postSeatNumber" />-->
+            <slider value="{{formData.postSeatNumber}}" min="1" max="{{maxLeftNumber}}" name='postSeatNumber'
+              show-value />
           </view>
         </view>
+      </view>
+      <view class="weui-cells__title">备注</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="page-section">
+            <view class="textarea-wrp">
+              <textarea auto-focus="true" style="min-height: 3em" value="{{formData.postNotes}}"
+                name='postNotes' />
+            </view>
+          </view>
 
-        <view class="page-section">
+
+          <!--<view class="page-section textarea-wrp">-->
           <!--<view class="page-section-title">输入区域高度自适应，不会出现滚动条</view>-->
-          <view class="textarea-wrp">
-            <textarea  auto-height value="{{formData.postNotes}}" placeholder='备注' name='postNotes'/>
-          </view>
+          <!--<view class="textarea-wrp">-->
+          <!--<textarea auto-height value="{{formData.postNotes}}" name='postNotes' />-->
+          <!--</view>-->
+          <!--</view>-->
         </view>
-
-
       </view>
-
-
-      <view class="page-section">
-
-      </view>
-
-      <view class="btn-area">
-        <button type="primary" formType="submit">提交</button>
+      <view class="weui-btn-area">
+        <button type="primary" formType="submit" disabled='{{submitting}}'>提交</button>
       </view>
     </form>
   </view>

@@ -36,17 +36,6 @@
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
-          <view class="weui-label">性别</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.userGender}}" placeholder="必填项"
-            disabled="true"
-            name="userGender" />
-        </view>
-      </view>
-
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
           <view class="weui-label">部门</view>
         </view>
         <view class="weui-cell__bd">
@@ -113,12 +102,11 @@
             name="carSeatNumber" />
         </view>
       </view>
-
-
     </view>
 
-
-    <button type="primary" bindtap="editUserInfo">编辑个人信息</button>
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="editUserInfo">编辑个人信息</button>
+    </view>
   </view>
 
 </view>

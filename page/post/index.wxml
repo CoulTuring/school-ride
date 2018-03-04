@@ -37,7 +37,9 @@
       </view>
     </view>
   </view>
-  <view class="page__bd page__bd_spacing">
-    <button class="weui-btn" type="primary" bindtap="editPost" formType="submit">新增发布</button>
+  <view class="weui-btn-area">
+    <button disabled='{{!userHasCar}}' class="weui-btn" type="primary" bindtap="editPost"
+      formType="submit">新增发布
+    </button>
   </view>
 </view>

@@ -1,15 +1,16 @@
 // import { school } from '../../../../config'
 import AV from '../../../../libs/av-weapp-min'
-import { schools } from '../../../../util/optionsValue'
-import { findSchoolIndexByOptions } from '../../../../util/util'
-import {leanError} from '../../../common/common'
+import { schools, userGenderList } from '../../../../utils/optionsValue'
+import { findSchoolIndexByOptions } from '../../../../utils/util'
+import { leanError } from '../../../common/common'
 
 Page({
   data: {
-    array: schools,
-    index: schools.length - 1,
-    pickerHidden: true,
-    chosen: ''
+    userGenderList: userGenderList,
+    userGenderIndex: 0,
+    schools: schools,
+    schoolIndex: schools.length - 1,
+    submitting: false
   },
   onLoad: function () {
     const user = AV.User.current()
@@ -27,63 +28,72 @@ Page({
     }
 
     this.setData({
-      formData: formData, index: findSchoolIndexByOptions(formData.school)
+      formData: formData,
+      schoolIndex: findSchoolIndexByOptions(formData.school) || schools.length - 1,
+      userGenderIndex: userGenderList.findIndex(function checkAdult (item) {return item === formData.userGender}) || 0
     })
   },
-  bindPickerChange: function (e) {
+  bindUserGenderChange: function (e) {
     this.setData({
-      index: e.detail.value
+      userGenderIndex: e.detail.value
     })
   },
-  pickerConfirm: function (e) {
+  bindSchoolChange: function (e) {
     this.setData({
-      pickerHidden: true
-    })
-    this.setData({
-      chosen: e.detail.value
-    })
-  },
-  pickerCancel: function (e) {
-    this.setData({
-      pickerHidden: true
-    })
-  },
-  pickerShow: function (e) {
-    this.setData({
-      pickerHidden: false
+      schoolIndex: e.detail.value
     })
   },
   formSubmit: function (e) {
-    let form = e.detail.value
-    const formData = {
-      name: form.name,
-      userGender: form.userGender,
-      mobilePhoneNumber: form.mobilePhoneNumber,
-      userId: form.userId,
-      school: schools[this.data.index].id,
-      carColor: form.carColor || null,
-      carModel: form.carModel || null,
-      carSeatNumber: Number(form.carSeatNumber) || null,
-      carPlateNumber: form.carPlateNumber || null
+    const that = this
+    that.setData({submitting: true})
+    const formData = this.data.formData
+    const form = {
+      name: e.detail.value.name || formData.name,
+      userGender: e.detail.value.userGender || formData.userGender,
+      mobilePhoneNumber: e.detail.value.mobilePhoneNumber || formData.mobilePhoneNumber,
+      userId: e.detail.value.userId || formData.userId,
+      school: schools[this.data.schoolIndex].id,
+      carColor: e.detail.value.carColor || formData.carColor,
+      carModel: e.detail.value.carModel || formData.carModel,
+      carSeatNumber: Number(e.detail.value.carSeatNumber) || formData.carSeatNumber,
+      carPlateNumber: e.detail.value.carPlateNumber || formData.carPlateNumber
     }
-    if (form.name.length === 0 || form.userGender.length === 0) {
+    if (!form.name) {
       this.setData({
-        tip: '提示：用户名不可以为空！',
+        tip: '提示：姓名不可以为空！',
       })
-    } else {
+      setTimeout(function () {
+        that.setData({
+          tip: null,
+          submitting:false
+        })
+      }, 2000)
+    }
+    if (!form.mobilePhoneNumber) {
+      this.setData({
+        tip: '提示：手机号格式错误！',
+      })
+      setTimeout(function () {
+        that.setData({
+          tip: null,
+          submitting: false
+        })
+      }, 2000)
+    }
+    else {
       const user = AV.User.current()
-      user.set(formData)
+      user.set(form)
           .save()
-          .then(function (user) {
+          .then(function () {
+            wx.showToast({
+              title: '提交成功'
+            })
             setTimeout(function () {
-              wx.showToast({
-                title: '提交成功'
-              })
+              that.setData({submitting:false})
+              wx.navigateBack({number: 1})
               // this.globalData.user = user.toJSON()
             }, 1500)
-          })
-          .then(function () {
-            wx.navigateBack({number: 1})
+
           })
           .catch(function () {leanError()})
     }

@@ -1,5 +1,5 @@
 import AV from '../../../../libs/av-weapp-min'
-import {leanError} from '../../../common/common'
+import { leanError } from '../../../common/common'
 
 Page({
   data: {},
@@ -22,7 +22,6 @@ Page({
       icon: 'loading'
     })
     const post = new AV.Query('Post')
-    const application = new AV.Query('Application')
     return post.get(postId)
                .then(function (postItem) {
                  let postData = {
@@ -46,31 +45,38 @@ Page({
                    driverSchool: postItem.get('driverSchool'),
                  }
                  that.setData({postData})
-                 application.equalTo('post', postItem)
-                 return application.find()
-                                   .then((results) => {
-                                     console.log(results)
-                                     const applicationList = results.map((applicationItem) => {
-                                       return {
-                                         id: applicationItem.id,
-                                         passengerName: applicationItem.get('passengerName'),
-                                         passengerMobilePhoneNumber: applicationItem.get('passengerMobilePhoneNumber'),
-                                         passengerGender: applicationItem.get('passengerGender'),
-                                         passengerUserId: applicationItem.get('passengerUserId'),
-                                         passengerSchool: applicationItem.get('passengerSchool'),
 
-                                         applicationStartAddress: applicationItem.get('applicationStartAddress'),
-                                         applicationNotes: applicationItem.get('applicationNotes'),
-                                         applicationCancelDateTime: applicationItem.get('applicationCancelDateTime'),
-                                         applicationCanceled: applicationItem.get('applicationCanceled'),
-                                         applicationFinishDateTime: applicationItem.get('applicationFinishDateTime'),
-                                         applicationFinished: applicationItem.get('applicationFinished'),
-                                       }
-                                     })
-                                     console.log(applicationList)
-                                     return that.setData({applicationList})
-                                   })
-                                   .catch(function () {leanError()})
+                 const levelApplication = new AV.Query('Application')
+                 levelApplication.notEqualTo('applicationFinished', true)
+
+                 const applicationWithThisPost = new AV.Query('Application')
+                 applicationWithThisPost.equalTo('post', postItem)
+
+                 const query = AV.Query.and(levelApplication, applicationWithThisPost)
+                 return query.find()
+                             .then((results) => {
+                               console.log(results)
+                               const applicationList = results.map((applicationItem) => {
+                                 return {
+                                   id: applicationItem.id,
+                                   passengerName: applicationItem.get('passengerName'),
+                                   passengerMobilePhoneNumber: applicationItem.get('passengerMobilePhoneNumber'),
+                                   passengerGender: applicationItem.get('passengerGender'),
+                                   passengerUserId: applicationItem.get('passengerUserId'),
+                                   passengerSchool: applicationItem.get('passengerSchool'),
+
+                                   applicationStartAddress: applicationItem.get('applicationStartAddress'),
+                                   applicationNotes: applicationItem.get('applicationNotes'),
+                                   applicationCancelDateTime: applicationItem.get('applicationCancelDateTime'),
+                                   applicationCanceled: applicationItem.get('applicationCanceled'),
+                                   applicationFinishDateTime: applicationItem.get('applicationFinishDateTime'),
+                                   applicationFinished: applicationItem.get('applicationFinished'),
+                                 }
+                               })
+                               console.log(applicationList)
+                               return that.setData({applicationList})
+                             })
+                             .catch(function () {leanError()})
                })
                .catch(function () {leanError()})
   },

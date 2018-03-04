@@ -1,6 +1,6 @@
 // import { school } from '../../../../config'
 import AV from '../../../../libs/av-weapp-min'
-import { validate, validateRequired } from '../../../../util/validate'
+import { validate, validateRequired } from '../../../../utils/validate'
 import { leanError } from '../../../common/common'
 
 Page({
@@ -128,10 +128,10 @@ Page({
 
   formSubmit: function (e) {
     const that = this
-    that.setData({submitting: !that.data.submitting})
+    that.setData({submitting: true})
     const postData = this.data.postData
     const post = this.data.post
-
+    const applicationData = this.data.applicationData
     // validateRequired(['applicationStartAddress'], this)
     // if ('' === this.data.form.$invalidMsg) {
     //   console.log('invalid')
@@ -139,8 +139,20 @@ Page({
     //   console.log('valid')
     // }
     const form = {
-      applicationStartAddress: e.detail.value.applicationStartAddress,
-      applicationNotes: e.detail.value.applicationNotes
+      applicationStartAddress: e.detail.value.applicationStartAddress || applicationData.applicationStartAddress,
+      applicationNotes: e.detail.value.applicationNotes || applicationData.applicationNotes
+    }
+
+    if (form.applicationStartAddress) {
+      this.setData({
+        tip: '提示：上车位置不可以为空！'
+      })
+      setTimeout(function () {
+        that.setData({
+          tip: null,
+          submitting: false
+        })
+      }, 2000)
     }
 
     if (this.data.applicationId) {
@@ -148,15 +160,13 @@ Page({
       application.set(form)
                  .save()
                  .then(function (newApplication) {
+                   wx.showToast({
+                     title: '修改成功'
+                   })
                    setTimeout(function () {
-                     wx.showToast({
-                       title: '修改成功'
-                     })
+                     that.setData({submitting: false})
+                     wx.navigateBack({number: 1})
                    }, 1500)
-                 })
-                 .then(function () {
-                   that.setData({submitting: !that.data.submitting})
-                   wx.navigateBack({number: 1})
                  })
                  .catch(function () {leanError()})
 
@@ -190,13 +200,11 @@ Page({
                  application.setACL(acl)
                  application.save()
                             .then(function (applicationItem) {
+                              wx.showToast({title: '提交成功'})
                               setTimeout(function () {
-                                wx.showToast({title: '提交成功'})
+                                that.setData({submitting: false})
+                                wx.navigateBack({number: 1})
                               }, 1500)
-                            })
-                            .then(function () {
-                              that.setData({submitting: !that.data.submitting})
-                              wx.navigateBack({number: 1})
                             })
                             .catch(function () {leanError()})
                })

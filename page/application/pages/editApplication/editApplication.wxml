@@ -1,5 +1,7 @@
 <view class="page">
-
+  <view wx:if="{{tip}}" class="weui-loadmore">
+    <view class="weui-loadmore__tips">{{tip}}</view>
+  </view>
   <view class="page_bd">
     <view class="weui-cells__title">行程信息</view>
     <view class="weui-form-preview">

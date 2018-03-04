@@ -51,9 +51,9 @@ Page({
   },
   onShow: function () {
     this.loadInitialApplication()
-
-    // TODO： post结束后提醒预约者消息推送功能、error toast
-    // TODO: 增加表单验证   包括合法内容验证，发布乘车的剩余座位数小于车辆总作为数量
+    // TODO: 云引擎中，增加预约者取消预约后，增加post的剩余座位
+    // TODO: 云引擎中，增加取消发布后通知已预约成员，增加取消预约后，通知司机（区分修改application的来源：通过user判断该application的passenger是否为user）
+    // 增加表单验证   包括合法内容验证，发布乘车的剩余座位数小于车辆总作为数量
     // TODO: 增加后端的取消乘车或取消行程的微信通知或短信通知
   },
   loadInitialApplication: function () {

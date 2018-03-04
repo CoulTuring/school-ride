@@ -438,3 +438,5 @@ export const schools = [
     pinyin: ''
   }
 ]
+
+export const userGenderList=['男','女']

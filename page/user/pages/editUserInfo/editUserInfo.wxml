@@ -21,8 +21,12 @@
             <view class="weui-label">性别</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" value="{{formData.userGender}}" placeholder="必填项"
-              name="userGender" />
+            <picker bindchange="bindUserGenderChange" value="{{userGenderIndex}}"
+              range="{{userGenderList}}">
+              <view class="weui-input">{{userGenderList[userGenderIndex]}}</view>
+            </picker>
+            <!--<input class="weui-input" type="text" value="{{formData.userGender}}" placeholder="必填项"-->
+            <!--name="userGender" />-->
           </view>
         </view>
 
@@ -43,9 +47,9 @@
             <view class="weui-label">部门（学院）</view>
           </view>
           <view class="weui-cell__bd">
-            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}"
+            <picker bindchange="bindSchoolChange" value="{{schoolIndex}}" range="{{schools}}"
               range-key="name">
-              <view class="weui-input">{{array[index].name}}</view>
+              <view class="weui-input">{{schools[schoolIndex].name}}</view>
             </picker>
             <!--<input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}"  placeholder="必填项"-->
             <!--name="mobilePhoneNumber" />-->
@@ -81,7 +85,7 @@
             <view class="weui-label">车牌号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.carPlateNumber}}"
+            <input class="weui-input" type="text" value="{{formData.carPlateNumber}}"
               placeholder="可选项"
               name="carPlateNumber" />
           </view>
@@ -100,24 +104,16 @@
             <view class="weui-label">座位数量</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="number" value="{{formData.carSeatNumber}}"
+            <input class="weui-input" type="number" value="{{formData.carSeatNumber}}" maxlength="2"
               placeholder="可选项"
               name="carSeatNumber" />
           </view>
         </view>
-
-
       </view>
-
-
-      <view class="page-section">
-
-      </view>
-
-      <view class="btn-area">
-        <button type="primary" formType="submit">提交</button>
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" formType="submit" disabled='{{submitting}}'>提交
+        </button>
       </view>
     </form>
   </view>
-
 </view>

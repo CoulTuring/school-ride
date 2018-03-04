@@ -1,6 +1,6 @@
 import AV from '../../../../libs/av-weapp-min'
-import { schools } from '../../../../util/optionsValue'
-import { findSchoolIndexByOptions } from '../../../../util/util'
+import { schools } from '../../../../utils/optionsValue'
+import { findSchoolIndexByOptions } from '../../../../utils/util'
 
 Page({
   data: {},
