@@ -1,11 +1,13 @@
 import AV from '../../../../libs/av-weapp-min'
 import { schools } from '../../../../utils/optionsValue'
 import { findSchoolIndexByOptions } from '../../../../utils/util'
+import { leanError } from '../../../common/common'
 
 Page({
   data: {},
   onShow: function () {
     const user = AV.User.current()
+    const that = this
     const formData = {
       name: user.get('name'),
       userGender: user.get('userGender'),
@@ -20,6 +22,8 @@ Page({
     this.setData({
       formData: formData
     })
+
+
   },
 
   editUserInfo: function () {

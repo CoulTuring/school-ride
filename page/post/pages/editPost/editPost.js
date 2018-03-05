@@ -46,11 +46,8 @@ Page({
     }
     else {
       const formData = {
-        postStartAddress: null,
-        postEndAddress: null,
-        postStartDateTime: moment(),
+        postStartDateTime: moment().format('YYYY-MM-DD HH:mm'),
         postSeatNumber: user.get('carSeatNumber') - 1,
-        postNotes: null
       }
       this.setData({
         formData,
@@ -79,10 +76,11 @@ Page({
       postStartAddress: e.detail.value.postStartAddress || formData.postStartAddress,
       postEndAddress: e.detail.value.postEndAddress || formData.postEndAddress,
       postSeatNumber: Number(e.detail.value.postSeatNumber) || formData.postSeatNumber,
-      postStartDateTime: moment(`${that.data.postStartDate} ${that.data.postStartTime}`) || formData.postStartDateTime,
+      postStartDateTime: moment(`${that.data.postStartDate} ${that.data.postStartTime}`).format('YYYY-MM-DD HH:mm') || formData.postStartDateTime,
       postLeftNumber: Number(e.detail.value.postSeatNumber) || formData.postLeftNumber,
       postNotes: e.detail.value.postNotes || formData.postNotes
     }
+    console.log(form)
 
     if (!form.postStartAddress) {
       that.setData({
@@ -97,7 +95,7 @@ Page({
     }
     if (!form.postEndAddress) {
       that.setData({
-        tip: '提示：始发站不可以为空！',
+        tip: '提示：终点站不可以为空！',
       })
       setTimeout(function () {
         that.setData({
@@ -167,11 +165,20 @@ Page({
                          that.setData({submitting: !that.data.submitting})
                          wx.navigateBack({number: 1})
                        })
-                       .catch(function () {leanError()})
+                       .catch(function (error) {
+                         leanError()
+                         that.setData({submitting: true})
+                         console.log(error)
+                       })
                  })
-                 .catch(function () {leanError()})
+                 .catch(function (error) {
+                   leanError()
+                   console.log(error)
+                   that.setData({submitting: true})
+                 })
       }
     }
 
   }
 })
+

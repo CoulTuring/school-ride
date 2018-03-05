@@ -8,7 +8,14 @@ AV.init({
 
 App({
   onLaunch: function () {
-    console.log('App Launch')
+    const that = this
+    AV.User.loginWithWeapp().then(user => {
+      that.globalData.user = user.toJSON()
+      if (!user.get('name')) {
+        wx.navigateTo({url: `../user/pages/editUserInfo/editUserInfo`})
+      }
+    }).catch(function (error) {console.log(error)})
+
   },
   onShow: function () {
     console.log('App Show')
@@ -37,6 +44,7 @@ App({
               code: data.code
             },
             success: function (res) {
+
               console.log('拉取openid成功', res)
               self.globalData.openid = res.data.openid
               callback(null, self.globalData.openid)

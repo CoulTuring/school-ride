@@ -19,18 +19,18 @@ Page({
       name: user.get('name') || null,
       userGender: user.get('userGender') || null,
       mobilePhoneNumber: user.get('mobilePhoneNumber') || null,
-      userId: user.get('userId') || null,
-      school: user.get('school') || null,
-      carColor: user.get('carColor') || null,
-      carModel: user.get('carModel') || null,
-      carSeatNumber: user.get('carSeatNumber') || null,
-      carPlateNumber: user.get('carPlateNumber') || null
+      userId: user.get('userId'),
+      school: user.get('school'),
+      carColor: user.get('carColor'),
+      carModel: user.get('carModel'),
+      carSeatNumber: user.get('carSeatNumber'),
+      carPlateNumber: user.get('carPlateNumber')
     }
 
     this.setData({
       formData: formData,
-      schoolIndex: findSchoolIndexByOptions(formData.school) || schools.length - 1,
-      userGenderIndex: userGenderList.findIndex(function checkAdult (item) {return item === formData.userGender}) || 0
+      schoolIndex: formData.school ? findSchoolIndexByOptions(formData.school) : schools.length - 1,
+      userGenderIndex: formData.userGender ? userGenderList.findIndex(function checkAdult (item) {return item === formData.userGender}) : 0
     })
   },
   bindUserGenderChange: function (e) {
@@ -49,14 +49,14 @@ Page({
     const formData = this.data.formData
     const form = {
       name: e.detail.value.name || formData.name,
-      userGender: e.detail.value.userGender || formData.userGender,
+      userGender: userGenderList[that.data.userGenderIndex] || formData.userGender,
       mobilePhoneNumber: e.detail.value.mobilePhoneNumber || formData.mobilePhoneNumber,
-      userId: e.detail.value.userId || formData.userId,
+      userId: e.detail.value.userId,
       school: schools[this.data.schoolIndex].id,
-      carColor: e.detail.value.carColor || formData.carColor,
-      carModel: e.detail.value.carModel || formData.carModel,
-      carSeatNumber: Number(e.detail.value.carSeatNumber) || formData.carSeatNumber,
-      carPlateNumber: e.detail.value.carPlateNumber || formData.carPlateNumber
+      carColor: e.detail.value.carColor,
+      carModel: e.detail.value.carModel,
+      carSeatNumber: Number(e.detail.value.carSeatNumber),
+      carPlateNumber: e.detail.value.carPlateNumber
     }
     if (!form.name) {
       this.setData({
@@ -65,7 +65,7 @@ Page({
       setTimeout(function () {
         that.setData({
           tip: null,
-          submitting:false
+          submitting: false
         })
       }, 2000)
     }
@@ -82,6 +82,8 @@ Page({
     }
     else {
       const user = AV.User.current()
+      console.log(form)
+      console.log(user)
       user.set(form)
           .save()
           .then(function () {
@@ -89,13 +91,18 @@ Page({
               title: '提交成功'
             })
             setTimeout(function () {
-              that.setData({submitting:false})
+              that.setData({submitting: false})
               wx.navigateBack({number: 1})
               // this.globalData.user = user.toJSON()
             }, 1500)
 
           })
-          .catch(function () {leanError()})
+          .catch(function (error) {
+            leanError()
+            console.log(error)
+            that.setData({submitting: false})
+          })
     }
   }
+
 })

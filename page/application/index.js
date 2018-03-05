@@ -27,34 +27,25 @@ Page({
         })
       }
     })
-    AV.User.loginWithWeapp()
-      .then(function (user) {
-        // 调用小程序 API，得到用户信息
-        wx.getUserInfo({
-          success: function ({userInfo}) {
-            // 更新当前用户的信息
-            console.log(userInfo)
-            user.set(userInfo)
-                .save()
-                .then(function (user) {
-                  // 成功，此时可在控制台中看到更新后的用户信息
-                  if (!user.get('name')) {
-                    wx.navigateTo({url: `../../user/pages/editUserInfo/editUserInfo`})
-                  }
-                  // this.globalData.user = user.toJSON()
-                })
-                .catch(function () {leanError()})
-          }
-        })
-      })
-      .catch(function () {leanError()})
+    wx.getUserInfo({
+      success: ({userInfo}) => {
+        // 更新当前用户的信息
+
+        const user = AV.User.current()
+        user.set(userInfo).save().then(user => {
+              // 成功，此时可在控制台中看到更新后的用户信息
+              that.globalData.user = user.toJSON()
+            })
+            .catch(function (error) {
+              leanError()
+              console.log(error)
+            })
+      }
+    })
+
   },
   onShow: function () {
     this.loadInitialApplication()
-    // TODO: 云引擎中，增加预约者取消预约后，增加post的剩余座位
-    // TODO: 云引擎中，增加取消发布后通知已预约成员，增加取消预约后，通知司机（区分修改application的来源：通过user判断该application的passenger是否为user）
-    // 增加表单验证   包括合法内容验证，发布乘车的剩余座位数小于车辆总作为数量
-    // TODO: 增加后端的取消乘车或取消行程的微信通知或短信通知
   },
   loadInitialApplication: function () {
     const that = this
@@ -132,7 +123,6 @@ Page({
                         applicationFinished: applicationItem.get('applicationFinished'),
                       }
                     })
-
                     console.log(applicationList)
                     console.log(postList)
                     return that.setData({postList, applicationList})

@@ -79,7 +79,7 @@
 
 
       <view class="weui-btn-area">
-        <button class="weui-btn" type="primary" bindtap="showTopTips" formType="submit"
+        <button class="weui-btn" type="primary" formType="submit"
           disabled="{{submitting}}">
           {{applicationId?"修改":"预约"}}
         </button>

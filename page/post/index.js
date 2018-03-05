@@ -23,7 +23,8 @@ Page({
     }
     else {
       wx.showToast({
-        title: '请先从个人中心添加车辆'
+        icon: 'none',
+        title: '请先添加车辆'
       })
     }
     const finishedApplication = new AV.Query('Post')

@@ -140,10 +140,11 @@ Page({
     // }
     const form = {
       applicationStartAddress: e.detail.value.applicationStartAddress || applicationData.applicationStartAddress,
-      applicationNotes: e.detail.value.applicationNotes || applicationData.applicationNotes
+      applicationNotes: e.detail.value.applicationNotes
     }
+    console.log(form)
 
-    if (form.applicationStartAddress) {
+    if (!form.applicationStartAddress) {
       this.setData({
         tip: '提示：上车位置不可以为空！'
       })
@@ -154,62 +155,79 @@ Page({
         })
       }, 2000)
     }
-
-    if (this.data.applicationId) {
-      let application = AV.Object.createWithoutData('Application', this.data.applicationId)
-      application.set(form)
-                 .save()
-                 .then(function (newApplication) {
-                   wx.showToast({
-                     title: '修改成功'
-                   })
-                   setTimeout(function () {
-                     that.setData({submitting: false})
-                     wx.navigateBack({number: 1})
-                   }, 1500)
-                 })
-                 .catch(function () {leanError()})
-
-    }
     else {
-      console.log('form发生了submit事件，携带数据为：', e.detail.value)
-      const user = AV.User.current()
-      const Application = AV.Object.extend('Application')
-      let application = new Application()
-      const acl = new AV.ACL()
-      const roleQuery = new AV.Query(AV.Role)
-      roleQuery.equalTo('name', 'ApplicationAdmin')
-      roleQuery.first()
-               .then(function (role) {
-                 acl.setPublicReadAccess(true)
-                 acl.setPublicWriteAccess(false)
-                 acl.setWriteAccess(user, true)
-                 acl.setRoleWriteAccess(role, true)
-                 const passengerData = {
-                   passengerName: user.get('name'),
-                   passengerMobilePhoneNumber: user.get('mobilePhoneNumber'),
-                   passengerGender: user.get('userGender'),
-                   passengerUserId: user.get('userId'),
-                   passengerSchool: user.get('school'),
-                 }
-                 application.set(form)  // app信息
-                 application.set('passenger', user)  // passenger
-                 application.set(passengerData)
-                 application.set('post', post)
-                 application.set(postData)
-                 application.setACL(acl)
-                 application.save()
-                            .then(function (applicationItem) {
-                              wx.showToast({title: '提交成功'})
-                              setTimeout(function () {
+
+      if (this.data.applicationId) {
+        console.log('app')
+        let application = AV.Object.createWithoutData('Application', this.data.applicationId)
+        application.set(form)
+                   .save()
+                   .then(function (newApplication) {
+                     wx.showToast({
+                       title: '修改成功'
+                     })
+                     setTimeout(function () {
+                       that.setData({submitting: false})
+                       wx.navigateBack({number: 1})
+                     }, 1500)
+                   })
+                   .catch(function (error) {
+                     leanError()
+                     that.setData({submitting: false})
+                     console.log(error)
+
+                   })
+
+      }
+      else {
+        console.log('form发生了submit事件，携带数据为：', e.detail.value)
+        const user = AV.User.current()
+        const Application = AV.Object.extend('Application')
+        let application = new Application()
+        const acl = new AV.ACL()
+        const roleQuery = new AV.Query(AV.Role)
+        roleQuery.equalTo('name', 'ApplicationAdmin')
+        roleQuery.first()
+                 .then(function (role) {
+                   acl.setPublicReadAccess(true)
+                   acl.setPublicWriteAccess(false)
+                   acl.setWriteAccess(user, true)
+                   acl.setRoleWriteAccess(role, true)
+                   const passengerData = {
+                     passengerName: user.get('name'),
+                     passengerMobilePhoneNumber: user.get('mobilePhoneNumber'),
+                     passengerGender: user.get('userGender'),
+                     passengerUserId: user.get('userId'),
+                     passengerSchool: user.get('school'),
+                   }
+                   application.set(form)  // app信息
+                   application.set('passenger', user)  // passenger
+                   application.set(passengerData)
+                   application.set('post', post)
+                   application.set(postData)
+                   application.setACL(acl)
+                   application.save()
+                              .then(function (applicationItem) {
+                                wx.showToast({title: '提交成功'})
+                                setTimeout(function () {
+                                  that.setData({submitting: false})
+                                  wx.navigateBack({number: 1})
+                                }, 1500)
+                              })
+                              .catch(function (error) {
+                                console.log(error)
+                                leanError()
                                 that.setData({submitting: false})
-                                wx.navigateBack({number: 1})
-                              }, 1500)
-                            })
-                            .catch(function () {leanError()})
-               })
-               .catch(function () {leanError()})
+                              })
+                 })
+                 .catch(function (error) {
+                   leanError()
+                   console.log(error)
+                   that.setData({submitting: false})
+                 })
+      }
     }
+
   },
   formReset: function (e) {
     console.log('form发生了reset事件，携带数据为：', e.detail.value)
@@ -218,3 +236,4 @@ Page({
     })
   }
 })
+
