@@ -1,6 +1,8 @@
 import AV from '../../libs/av-weapp-min'
 import { leanError } from '../common/common'
 
+const app = getApp()
+
 const sliderWidth = 96 // 需要设置slider的宽度，用于计算中间位置
 
 Page({
@@ -19,6 +21,38 @@ Page({
   },
   onLoad: function () {
     const that = this
+
+    AV.User.loginWithWeapp().then(user => {
+      app.globalData.user = user.toJSON()
+    }).catch(console.error)
+
+    wx.getUserInfo({
+      success: ({userInfo}) => {
+        app.globalData.getUserInfoSuccess = true
+        console.log('f')
+
+        const user = AV.User.current()
+        user.set(userInfo)
+            .save()
+            .then(user => {
+              app.globalData.user = user.toJSON()
+              console.log('yy')
+              if (!user.get('name')) {
+                wx.navigateTo({url: `../user/pages/editUserInfo/editUserInfo`})
+              }
+            })
+            .catch(console.error)
+      },
+      fail: function (res) {
+        console.log('e')
+        app.globalData.getUserInfoSuccess = false
+        // 跳转到授权页
+        wx.redirectTo({
+          url: '/page/msg/msg_fail'
+        })
+      }
+    })
+
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -27,24 +61,15 @@ Page({
         })
       }
     })
-    wx.getUserInfo({
-      success: ({userInfo}) => {
-        // 更新当前用户的信息
-
-        const user = AV.User.current()
-        user.set(userInfo).save().then(user => {
-              // 成功，此时可在控制台中看到更新后的用户信息
-              that.globalData.user = user.toJSON()
-            })
-            .catch(function (error) {
-              leanError()
-              console.log(error)
-            })
-      }
-    })
 
   },
   onShow: function () {
+    // console.log(app.globalData.getUserInfoSuccess)
+    // const user = AV.User.current()
+    // console.log(Boolean(user && !user.get('name') && app.globalData.getUserInfoSuccess === true))
+    // if (user && !user.get('name') && app.globalData.getUserInfoSuccess === true) {
+    //   wx.navigateTo({url: `../user/pages/editUserInfo/editUserInfo`})
+    // }
     this.loadInitialApplication()
   },
   loadInitialApplication: function () {

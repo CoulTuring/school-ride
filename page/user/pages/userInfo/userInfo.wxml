@@ -39,7 +39,7 @@
           <view class="weui-label">部门</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.school}}" placeholder="必填项"
+          <input class="weui-input" type="text" value="{{formData.school}}" placeholder="必填项"
             disabled="true"
             name="school" />
         </view>
@@ -51,7 +51,7 @@
           <view class="weui-label">工号</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" value="{{formData.userId}}" placeholder="可选项"
+          <input class="weui-input" type="text" value="{{formData.userId}}" placeholder="可选项"
             disabled="true"
             name="userId" />
         </view>

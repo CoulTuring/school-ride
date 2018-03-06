@@ -69,7 +69,7 @@ Page({
         })
       }, 2000)
     }
-    if (!form.mobilePhoneNumber) {
+    if (!form.mobilePhoneNumber || form.mobilePhoneNumber.length !== 11) {
       this.setData({
         tip: '提示：手机号格式错误！',
       })
@@ -98,7 +98,7 @@ Page({
 
           })
           .catch(function (error) {
-            leanError()
+            wx.showToast({icon: 'none', title: String(error)})
             console.log(error)
             that.setData({submitting: false})
           })

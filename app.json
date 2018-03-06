@@ -10,7 +10,8 @@
     "page/user/pages/userInfo/userInfo",
     "page/user/pages/editUserInfo/editUserInfo",
     "page/user/pages/applicationLog/applicationLog",
-    "page/user/pages/postLog/postLog"
+    "page/user/pages/postLog/postLog",
+    "page/msg/msg_fail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
