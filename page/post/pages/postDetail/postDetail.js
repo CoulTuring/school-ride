@@ -1,5 +1,6 @@
 import AV from '../../../../libs/av-weapp-min'
 import { leanError } from '../../../common/common'
+import moment from '../../../../libs/moment.min'
 
 Page({
   data: {},
@@ -28,7 +29,7 @@ Page({
                    // 发布信息
                    postStartAddress: postItem.get('postStartAddress'),
                    postEndAddress: postItem.get('postEndAddress'),
-                   postStartDateTime: postItem.get('postStartDateTime'),
+                   postStartDateTime: moment(postItem.get('postStartDateTime')).format('YYYY-MM-DD HH:mm'),
                    postNotes: postItem.get('postNotes'),
                    postSeatNumber: postItem.get('postSeatNumber'),
                    postLeftNumber: postItem.get('postLeftNumber'),
@@ -74,6 +75,7 @@ Page({
                                  }
                                })
                                console.log(applicationList)
+                               wx.hideToast()
                                return that.setData({applicationList})
                              })
                              .catch(function () {leanError()})

@@ -1,5 +1,6 @@
 import AV from '../../../../libs/av-weapp-min'
 import { leanError } from '../../../common/common'
+import moment from '../../../../libs/moment.min'
 
 Page({
 
@@ -26,7 +27,7 @@ Page({
                id: applicationItem.id,
                postStartAddress: applicationItem.get('postStartAddress'),
                postEndAddress: applicationItem.get('postEndAddress'),
-               postStartDateTime: applicationItem.get('postStartDateTime'),
+               postStartDateTime: moment(applicationItem.get('postStartDateTime')).format('YYYY-MM-DD HH:mm'),
                applicationNotes: applicationItem.get('applicationNotes'),
                postSeatNumber: applicationItem.get('postSeatNumber'),
                postLeftNumber: applicationItem.get('postLeftNumber')

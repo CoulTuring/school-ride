@@ -1,5 +1,6 @@
 import AV from '../../libs/av-weapp-min'
 import { leanError } from '../common/common'
+import moment from '../../libs/moment.min'
 
 const app = getApp()
 
@@ -102,7 +103,7 @@ Page({
                         id: postItem.id,
                         postStartAddress: postItem.get('postStartAddress'),
                         postEndAddress: postItem.get('postEndAddress'),
-                        postStartDateTime: postItem.get('postStartDateTime'),
+                        postStartDateTime: moment(postItem.get('postStartDateTime')).format('YYYY-MM-DD HH:mm'),
                         postNotes: postItem.get('postNotes'),
                         postLeftNumber: postItem.get('postLeftNumber'),
                         postSeatNumber: postItem.get('postSeatNumber'),
@@ -125,7 +126,7 @@ Page({
                         id: applicationItem.id,
                         postStartAddress: applicationItem.get('postStartAddress'),
                         postEndAddress: applicationItem.get('postEndAddress'),
-                        postStartDateTime: applicationItem.get('postStartDateTime'),
+                        postStartDateTime: moment(applicationItem.get('postStartDateTime')).format('YYYY-MM-DD HH:mm'),
                         postNotes: applicationItem.get('postNotes'),
                         postSeatNumber: applicationItem.get('postSeatNumber'),
                         // 车辆信息

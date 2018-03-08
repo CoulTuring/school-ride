@@ -1,6 +1,8 @@
 import AV from '../../../../libs/av-weapp-min'
 import {leanError} from '../../../common/common'
+import moment from '../../../../libs/moment.min'
 
+// TODO: 结束行程时出现了不停请求 {"applicationFinished":true}
 Page({
   data: {},
   onPullDownRefresh: function () {
@@ -38,7 +40,7 @@ Page({
                           // 发布信息
                           postStartAddress: applicationItem.get('postStartAddress'),
                           postEndAddress: applicationItem.get('postEndAddress'),
-                          postStartDateTime: applicationItem.get('postStartDateTime'),
+                          postStartDateTime: moment(applicationItem.get('postStartDateTime')).format('YYYY-MM-DD HH:mm'),
                           postNotes: applicationItem.get('postNotes'),
                           postSeatNumber: applicationItem.get('postSeatNumber'),
                           postLeftNumber: applicationItem.get('postLeftNumber'),

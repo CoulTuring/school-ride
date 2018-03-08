@@ -46,7 +46,7 @@ Page({
     }
     else {
       const formData = {
-        postStartDateTime: moment().format('YYYY-MM-DD HH:mm'),
+        postStartDateTime: new Date(),
         postSeatNumber: user.get('carSeatNumber') - 1,
       }
       this.setData({
@@ -76,7 +76,7 @@ Page({
       postStartAddress: e.detail.value.postStartAddress || formData.postStartAddress,
       postEndAddress: e.detail.value.postEndAddress || formData.postEndAddress,
       postSeatNumber: Number(e.detail.value.postSeatNumber) || formData.postSeatNumber,
-      postStartDateTime: moment(`${that.data.postStartDate} ${that.data.postStartTime}`).format('YYYY-MM-DD HH:mm') || formData.postStartDateTime,
+      postStartDateTime: new Date(`${that.data.postStartDate} ${that.data.postStartTime}`) || formData.postStartDateTime,
       postLeftNumber: Number(e.detail.value.postSeatNumber) || formData.postLeftNumber,
       postNotes: e.detail.value.postNotes || formData.postNotes
     }

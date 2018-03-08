@@ -17,7 +17,7 @@
             <view class="weui-label">始发站</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" type="text" value="{{formData.postStartAddress}}"
+            <input class="weui-input" auto-focus="true" type="text" value="{{formData.postStartAddress}}"
               placeholder="必填项"
               name="postStartAddress" />
           </view>
@@ -98,7 +98,7 @@
         <view class="weui-cell weui-cell_input">
           <view class="page-section">
             <view class="textarea-wrp">
-              <textarea auto-focus="true" style="min-height: 3em" value="{{formData.postNotes}}"
+              <textarea style="min-height: 3em" value="{{formData.postNotes}}"
                 name='postNotes' />
             </view>
           </view>
