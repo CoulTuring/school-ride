@@ -25,44 +25,47 @@ Page({
 
     AV.User.loginWithWeapp().then(user => {
       app.globalData.user = user.toJSON()
-    }).catch(console.error)
+      wx.getUserInfo({
+        success: ({ userInfo }) => {
+          console.log(userInfo)
+          app.globalData.getUserInfoSuccess = true
+          console.log('f')
 
-    wx.getUserInfo({
-      success: ({userInfo}) => {
-        app.globalData.getUserInfoSuccess = true
-        console.log('f')
 
-        const user = AV.User.current()
-        user.set(userInfo)
+          const user = AV.User.current()
+          user.set(userInfo)
             .save()
             .then(user => {
               app.globalData.user = user.toJSON()
               console.log('yy')
               if (!user.get('name')) {
-                wx.navigateTo({url: `../user/pages/editUserInfo/editUserInfo`})
+                wx.navigateTo({ url: `../user/pages/editUserInfo/editUserInfo` })
               }
             })
             .catch(console.error)
-      },
-      fail: function (res) {
-        console.log('e')
-        app.globalData.getUserInfoSuccess = false
-        // 跳转到授权页
-        wx.redirectTo({
-          url: '/page/msg/msg_fail'
-        })
-      }
-    })
+        },
+        fail: function (res) {
+          console.log('e')
+          app.globalData.getUserInfoSuccess = false
+          // 跳转到授权页
+          wx.redirectTo({
+            url: '/page/msg/msg_fail'
+          })
+        }
+      })
 
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
-          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
-        })
-      }
-    })
+      wx.getSystemInfo({
+        success: function (res) {
+          that.setData({
+            sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+            sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+          })
+        }
+      })
 
+    }).catch(console.error)
+
+  
   },
   onShow: function () {
     // console.log(app.globalData.getUserInfoSuccess)
@@ -76,7 +79,9 @@ Page({
   loadInitialApplication: function () {
     const that = this
     const user = AV.User.current()
-
+    if (!user.get('name')) {
+      wx.navigateTo({ url: `../user/pages/editUserInfo/editUserInfo` })
+    }
     const postNotFinished = new AV.Query('Post')
     postNotFinished.notEqualTo('postFinished', true)
 

@@ -8,7 +8,7 @@
           <view class="weui-label">姓名</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.name}}" placeholder="必填项"
+          <input class="weui-input" type="text" value="{{formData.name}}" 
             disabled="true"
             name="name" />
         </view>
@@ -19,7 +19,7 @@
           <view class="weui-label">性别</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.userGender}}" placeholder="必填项"
+          <input class="weui-input" type="text" value="{{formData.userGender}}" 
             disabled="true"
             name="userGender" />
         </view>
@@ -30,7 +30,7 @@
         </view>
         <view class="weui-cell__bd">
           <input class="weui-input" type="number" value="{{formData.mobilePhoneNumber}}"
-            placeholder="必填项" disabled="true"
+            disabled="true"
             name="mobilePhoneNumber" />
         </view>
       </view>
@@ -39,7 +39,7 @@
           <view class="weui-label">部门</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.school}}" placeholder="必填项"
+          <input class="weui-input" type="text" value="{{formData.school}}"
             disabled="true"
             name="school" />
         </view>
@@ -51,7 +51,7 @@
           <view class="weui-label">工号</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.userId}}" placeholder="可选项"
+          <input class="weui-input" type="text" value="{{formData.userId}}" 
             disabled="true"
             name="userId" />
         </view>
@@ -67,7 +67,7 @@
           <view class="weui-label">车型</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.carModel}}" placeholder="可选项"
+          <input class="weui-input" type="text" value="{{formData.carModel}}"
             disabled="true"
             name="carModel" />
         </view>
@@ -78,7 +78,7 @@
         </view>
         <view class="weui-cell__bd">
           <input class="weui-input" type="text" value="{{formData.carPlateNumber}}"
-            placeholder="可选项" disabled="true"
+disabled="true"
             name="carPlateNumber" />
         </view>
       </view>
@@ -87,7 +87,7 @@
           <view class="weui-label">颜色</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="text" value="{{formData.carColor}}" placeholder="可选项"
+          <input class="weui-input" type="text" value="{{formData.carColor}}"
             disabled="true"
             name="carColor" />
         </view>
@@ -98,7 +98,7 @@
         </view>
         <view class="weui-cell__bd">
           <input class="weui-input" type="number" value="{{formData.carSeatNumber}}"
-            placeholder="可选项" disabled="true"
+         disabled="true"
             name="carSeatNumber" />
         </view>
       </view>
