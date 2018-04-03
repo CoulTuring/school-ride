@@ -2,8 +2,8 @@ const openIdUrl = require('./config').openIdUrl
 const AV = require('./libs/av-weapp-min.js')
 
 AV.init({
-  appId: 'Kll3tmwp9mNAc4eEyoBBk7An-gzGzoHsz',
-  appKey: '6x6vuNTlKUjXhj4G7PkxjYTt',
+  appId: '',
+  appKey: '',
 })
 
 App({
